@@ -1,0 +1,16 @@
+# Generated extension packages
+/dist/
+
+# Chrome signing keys and locally packed extensions
+*.pem
+*.crx
+
+# Local tooling
+node_modules/
+.idea/
+.vscode/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini

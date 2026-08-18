@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Помощник Daggerheart.su"
+  },
+  "extensionShortName": {
+    "message": "DH.su"
+  },
+  "extensionDescription": {
+    "message": "Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su."
+  }
+}

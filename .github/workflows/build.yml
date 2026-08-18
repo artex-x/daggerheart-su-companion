@@ -1,0 +1,25 @@
+name: Build Chrome extension
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate and build extension ZIP
+        shell: pwsh
+        run: ./scripts/build.ps1
+
+      - name: Upload extension package
+        uses: actions/upload-artifact@v4
+        with:
+          name: daggerheart-su-companion
+          path: dist/*.zip
+          if-no-files-found: error

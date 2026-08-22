@@ -15,6 +15,8 @@ A free, cross-browser userscript for [Daggerheart.su](https://daggerheart.su/) a
 
 Greasy Fork is the primary installation and automatic-update channel. GitHub hosts the source code, documentation, and issue tracker.
 
+After the one-time source-sync and repository-webhook setup, pushing a higher userscript `@version` to `main` automatically updates the existing Greasy Fork listing. CI rejects userscript changes without a version increase and verifies the published version after each main-branch push.
+
 ### Updating an older installation
 
 Install the current release from the same Greasy Fork page. The script keeps the existing `@name` and `@namespace`, so the userscript manager should offer an update instead of creating another script. Check its dashboard afterward and leave only one enabled copy.

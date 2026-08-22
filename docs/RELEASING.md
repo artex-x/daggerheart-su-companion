@@ -2,6 +2,26 @@
 
 [Greasy Fork](https://greasyfork.org/en/scripts/591859-daggerheart-companion-ratings-class-cards-print) is the primary distribution and automatic-update channel. The public `main` branch is the canonical source and feeds the existing Greasy Fork listing.
 
+## One-time automatic deployment setup
+
+1. On the Greasy Fork listing's **Admin** page, set **Sync URL** to:
+
+   ```text
+   https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
+   ```
+
+2. Select **Automatic** synchronization and save.
+3. In GitHub, open **Settings → Webhooks → Add webhook** and use:
+   - Payload URL: `https://api.greasyfork.org/en/users/1635344-artex-artex/webhook`
+   - Content type: `application/json`
+   - Secret: the value shown on the signed-in [Greasy Fork webhook page](https://greasyfork.org/en/users/webhook-info)
+   - Events: **Just the push event**
+   - Active: checked
+
+The webhook secret is a GitHub repository-webhook setting, not an Actions environment variable. GitHub does not substitute `${{ secrets.GREASY_FORK_SECRET }}` or another variable into that field; paste the actual Greasy Fork secret and never commit it.
+
+The webhook fires independently of GitHub Actions. Protect `main` and require the validation workflow before merging if failed validation must prevent a public update. The workflow additionally requires a higher `@version` whenever the userscript changes and waits for the Greasy Fork API to report the pushed version.
+
 ## One-command preparation
 
 From the repository root:
@@ -19,16 +39,17 @@ Omit `-Version` when the correct version is already present.
 1. Review `git diff`, especially the metadata block and ratings/comment changes.
 2. Run `scripts/audit-dread.ps1`, then complete `docs/TESTING.md` with the root userscript.
 3. Commit the version change and push `main`.
-4. Update the existing Greasy Fork listing from the root `daggerheart-su-companion.user.js`. Configure code sync from the [raw GitHub source](https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js) if it is not already enabled.
-5. On Greasy Fork, review the diff and publish the new version. Do not create a second listing.
-6. Open the public Greasy Fork page and confirm it shows the expected version.
-7. Install/update from Greasy Fork and confirm the manager shows only the three Daggerheart.su matches and three storage grants.
-8. Repeat a short ratings plus print-workspace smoke test.
-9. Optionally create a GitHub Release named `v<version>` and attach `dist/release-<version>/daggerheart-su-companion.user.js` plus `SHA256SUMS.txt` as source artifacts, not as an alternative installation channel.
+4. Confirm the `Validate and publish userscript` workflow passes both jobs. The second job verifies that the webhook synchronized the expected version to Greasy Fork.
+5. Open the public Greasy Fork page and confirm it shows the expected version.
+6. Install/update from Greasy Fork and confirm the manager shows only the three Daggerheart.su matches and three storage grants.
+7. Repeat a short ratings plus print-workspace smoke test.
+8. Optionally create a GitHub Release named `v<version>` and attach `dist/release-<version>/daggerheart-su-companion.user.js` plus `SHA256SUMS.txt` as source artifacts, not as an alternative installation channel.
 
 ## Automatic updates
 
 Greasy Fork rewrites `@updateURL` and `@downloadURL` when it publishes the script. Keep those fields, and `@installURL`, out of the repository source so users do not end up on competing update channels. Every distributed change must increase `@version`; otherwise Greasy Fork and userscript managers will not treat it as a newer release.
+
+`scripts/assert-version-bump.ps1` enforces that rule for changes pushed to `main`. `scripts/verify-greasy-fork-sync.ps1` polls the public read-only API after validation; failure normally means the one-time sync setting or GitHub webhook delivery needs attention.
 
 The installable filename and Greasy Fork listing must remain stable, and the metadata block must remain at the first byte of the file.
 

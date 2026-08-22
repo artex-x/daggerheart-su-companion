@@ -34,6 +34,7 @@ Test the root `daggerheart-su-companion.user.js`, not a stale copy. Keep browser
 ## Print and PDF
 
 - [ ] The hidden print tree receives usage/recharge markers and class print normalization.
+- [ ] Standalone limits such as `до вашего следующего отдыха`, `до конца её следующего отдыха`, and `until your next rest` are underlined across nested links.
 - [ ] Ratings and userscript controls are absent from print cells.
 - [ ] Nine cards produce one A4 page without a blank second page.
 - [ ] Fewer cards start at the top of the sheet.

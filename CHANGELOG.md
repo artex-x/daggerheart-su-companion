@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.8 — 2026-08-22
+
+- Marked standalone next-rest limits such as “до вашего следующего отдыха” and “until your next rest” in printed cards.
+- Covered possessive, “до конца”, and English `before`/`at`/`on` next-rest variants found across live printable catalogs.
+
 ## 7.0.7 — 2026-08-22
 
 - Restored hover and keyboard-focus rule tooltips for links inside cards reconstructed in the print workspace.

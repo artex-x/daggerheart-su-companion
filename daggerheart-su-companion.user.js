@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.7
+// @version      7.0.8
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -3313,9 +3313,14 @@
         const specs = language === "ru" ? [
             {
                 // Подчёркиваем лимит целиком, включая вид отдыха: «один раз до следующего Продолжительного Отдыха».
-                regex: /(?:один|два|три|четыре|пять|шесть|\d+)(?:\s+[\p{L}-]+){0,3}\s+раз(?:а)?\s+(?:за\s+(?:сессию|отдых)|до\s+следующ(?:его|ей)\s+(?:(?:продолжительного|короткого)\s+)?(?:отдыха|сессии))/giu
+                regex: /(?:один|два|три|четыре|пять|шесть|\d+)(?:\s+[\p{L}-]+){0,3}\s+раз(?:а)?\s+(?:за\s+(?:сессию|отдых)|до\s+(?:конца\s+)?(?:(?:вашего|вашей|ваших|своего|своей|своих|его|её|ее|их)\s+)?следующ(?:его|ей)\s+(?:(?:продолжительного|короткого)\s+)?(?:отдыха|сессии))/giu
             },
             { regex: /(?:в начале|в конце)\s+(?:(?:каждой|следующей|этой)\s+)?сессии/giu },
+            {
+                // Самостоятельный срок также важен в описаниях длительности:
+                // «до вашего следующего отдыха», «до конца её следующего отдыха».
+                regex: /до\s+(?:конца\s+)?(?:(?:вашего|вашей|ваших|своего|своей|своих|его|её|ее|их)\s+)?следующ(?:его|ей)\s+(?:(?:продолжительного|короткого)\s+)?(?:отдыха|сессии)/giu
+            },
             { regex: /(?:во время|после)\s+(?:вашего\s+|их\s+|своего\s+)?следующ(?:его|ей)\s+(?:продолжительного\s+|короткого\s+)?отдыха/giu },
             {
                 // Обычное упоминание отдыха отмечаем только тогда, когда этот же блок сбрасывает или возвращает ресурс.
@@ -3348,6 +3353,7 @@
                 regex: /\b(?:once|twice|(?:one|two|three|four|five|six|\d+)(?:\s+[\p{L}-]+){0,3}\s+times?)(?:\s+[\p{L}-]+){0,3}\s+(?:per\s+(?:long\s+|short\s+)?(?:rest|session)|until\s+(?:your\s+)?next\s+(?:long\s+|short\s+)?(?:rest|session))\b/giu
             },
             { regex: /\b(?:at the start|at the beginning|at the end)\s+of\s+(?:each|every|a|the)\s+session\b/giu },
+            { regex: /\b(?:until|before|at|on|by)\s+(?:your\s+|their\s+|the\s+)?next\s+(?:long\s+|short\s+)?(?:rest|session)\b/giu },
             { regex: /\b(?:during|after)\s+(?:your\s+|their\s+|the\s+)?next\s+(?:long\s+|short\s+)?rest\b/giu },
             { regex: /\bafter\s+(?:your\s+|a\s+)?(?:(?:long|short)\s+)?rest\b/giu, when: refillContext },
             { regex: /\bwhen you (?:take|finish|complete)\s+(?:a\s+|your\s+)?(?:long\s+|short\s+)?rest\b/giu, when: refillContext },

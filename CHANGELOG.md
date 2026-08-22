@@ -6,6 +6,7 @@ All notable changes to this project are documented here.
 
 - Added the 16 missing Dread ratings and bilingual source-derived commentary, completing all 21 cards from The Void v1.5.
 - Added aliases for four stale Dread catalogue slugs and direct support for `en.daggerheart.su`.
+- Canonicalized the renamed Brawler class while retaining compatibility with the site's legacy `playtest-fighter` slug.
 - Preserved the guide's special 😬 rating for Summon Horror instead of inventing a displayed star score.
 - Added a repeatable live Dread audit covering both English and Russian catalogues.
 - Clarified that MIT covers only original code and documentation, and added DPCGL/playtest and ratings-guide license notices.

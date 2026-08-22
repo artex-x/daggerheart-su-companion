@@ -95,16 +95,17 @@ foreach ($slug in $expectedDreadRatings) {
     }
 }
 
-$expectedDreadAliases = [ordered]@{
+$expectedSlugAliases = [ordered]@{
+    'fighter' = 'brawler'
     'withering-affliction' = 'chains-of-affliction'
     'nether-flames' = 'darkfire'
     'wailing-leap' = 'jump-scare'
     'avatar-of-malice' = 'avatar-of-terror'
 }
-foreach ($alias in $expectedDreadAliases.GetEnumerator()) {
+foreach ($alias in $expectedSlugAliases.GetEnumerator()) {
     $mapping = '"' + $alias.Key + '": "' + $alias.Value + '"'
     if (-not $source.Contains($mapping)) {
-        throw "Missing Dread slug alias: $mapping"
+        throw "Missing slug alias: $mapping"
     }
 }
 

@@ -50,13 +50,6 @@
                 "ru": "Специалист по безоружному бою с сильными комбинациями, хотя подклассы неравны по силе."
             }
         },
-        "fighter": {
-            "stars": 3,
-            "comment": {
-                "en": "An unarmed specialist with strong combos, though its subclasses vary in power.",
-                "ru": "Специалист по безоружному бою с сильными комбинациями, хотя подклассы неравны по силе."
-            }
-        },
         "druid": {
             "stars": 3,
             "comment": {
@@ -2920,9 +2913,11 @@
         }
     };
 
-    // Four Dread cards still expose pre-rename catalogue slugs on both site languages.
-    // Ratings use the current visible English card names as canonical keys.
+    // Some site URLs still expose pre-rename slugs. Ratings use the current
+    // visible English names as canonical keys; playtest- prefixes are handled
+    // separately by findSlug.
     const SLUG_ALIASES = Object.freeze({
+        "fighter": "brawler",
         "withering-affliction": "chains-of-affliction",
         "nether-flames": "darkfire",
         "wailing-leap": "jump-scare",

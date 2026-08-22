@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.5
+// @version      7.0.6
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -4098,7 +4098,10 @@
         while (size > 6.5) {
             quick.style.fontSize = size + "px";
             quick.style.lineHeight = size >= 15 ? "1.31" : size >= 13 ? "1.27" : size >= 10 ? "1.22" : "1.16";
-            quick.style.gap = size >= 15 ? "11px" : size >= 13 ? "9px" : size >= 10 ? "7px" : "4px";
+            // Native multi-feature domain cards use a steady paragraph rhythm
+            // of roughly half an em. Keep the same proportion as the class
+            // font changes instead of jumping between several fixed gaps.
+            quick.style.gap = Math.max(3, size * .54).toFixed(2) + "px";
             if (quick.scrollHeight <= available + 1) break;
             size -= 0.25;
         }
@@ -4108,16 +4111,11 @@
             size -= 0.25;
             quick.style.fontSize = size + "px";
             quick.style.lineHeight = "1.12";
-            quick.style.gap = "3px";
+            quick.style.gap = Math.max(3, size * .54).toFixed(2) + "px";
         }
-        const gaps = Math.max(0, quick.children.length - 1);
-        const spare = Math.max(0, available - quick.scrollHeight);
-        if (gaps && spare > 18) {
-            // Короткие классы используют всю высоту карточки: свободное место
-            // разделяет свойства, а не образует случайный пустой хвост снизу.
-            quick.style.height = available + "px";
-            quick.style.alignContent = "space-between";
-        }
+        // Keep features grouped at the top like native grimoire/domain cards.
+        // Distributing spare height with space-between made the same logical
+        // paragraph gap vary wildly according to the remaining card space.
         quick.style.maxHeight = available + "px";
         quick.style.overflow = quick.scrollHeight <= available + 1 ? "visible" : "hidden";
         card.dataset.dhClassFontSize = String(size);

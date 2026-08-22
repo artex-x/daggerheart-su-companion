@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.6 — 2026-08-22
+
+- Matched spacing between class features to the natural paragraph rhythm of multi-feature domain and grimoire cards.
+- Stopped distributing unused card height between class features, preventing oversized and inconsistent gaps.
+
 ## 7.0.5 — 2026-08-22
 
 - Matched compact class body typography to native card text and restored hover tooltips plus direct navigation for rule links.

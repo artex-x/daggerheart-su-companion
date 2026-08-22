@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.8
+// @version      7.0.9
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -2957,8 +2957,8 @@
             emptyTitle: "Пока нет выбранных карт",
             emptyBody: "Откройте любой справочник и нажмите + на нужных картах. Выбор сохранится при переходе между страницами.",
             backToCards: "Вернуться к картам",
-            layout33: "3 × 3 — стандартный размер",
-            layout33Hint: "Рекомендуется: карты около 63 × 88 мм.",
+            layout33: "A4 · сетка 3 × 3",
+            layout33Hint: "В диалоге печати: A4, книжная ориентация, поля — «Нет».",
             printNow: "Печатать",
             clearAll: "Очистить всё",
             clearConfirm: "Удалить все карты из макета печати?",
@@ -3020,8 +3020,8 @@
             emptyTitle: "No cards selected yet",
             emptyBody: "Open any reference page and press + on the cards you need. Your selection persists across pages.",
             backToCards: "Back to cards",
-            layout33: "3 × 3 — standard size",
-            layout33Hint: "Recommended: cards are approximately 63 × 88 mm.",
+            layout33: "A4 · 3 × 3 grid",
+            layout33Hint: "In the print dialog, choose A4, portrait, and margins: None.",
             printNow: "Print",
             clearAll: "Clear all",
             clearConfirm: "Remove every card from the print layout?",

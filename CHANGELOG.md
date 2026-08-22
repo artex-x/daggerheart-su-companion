@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.9 — 2026-08-22
+
+- Replaced the redundant 3 × 3 size recommendation with actionable A4 print-dialog settings in Russian and English.
+
 ## 7.0.8 — 2026-08-22
 
 - Marked standalone next-rest limits such as “до вашего следующего отдыха” and “until your next rest” in printed cards.

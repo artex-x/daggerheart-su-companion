@@ -1,9 +1,5 @@
-# Generated extension packages
+# Generated release artifacts
 /dist/
-
-# Chrome signing keys and locally packed extensions
-*.pem
-*.crx
 
 # Local tooling
 node_modules/

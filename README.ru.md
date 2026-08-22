@@ -1,74 +1,72 @@
 # Помощник Daggerheart.su
 
-Неофициальное расширение Chrome для [Daggerheart.su](https://daggerheart.su/) и [русской версии сайта](https://ru.daggerheart.su/). Оно добавляет рейтинги и фильтры, улучшает карточки классов и позволяет собирать выбранные карточки в локальный макет 3×3 для печати на A4.
+Бесплатный кросс-браузерный userscript для [Daggerheart.su](https://daggerheart.su/) и [русской версии сайта](https://ru.daggerheart.su/). Он добавляет рейтинги и фильтры, улучшает карточки классов и позволяет собирать выбранные карточки в локальный макет 3×3 для печати на A4.
 
 [English README](README.md)
 
-## Быстрый запуск
+## Установка за пару минут
 
-Понадобятся Google Chrome или другой Chromium-браузер и Windows PowerShell 5.1 или новее.
+1. Установите менеджер userscript:
+   - [Tampermonkey](https://www.tampermonkey.net/) для Chrome, Brave, Edge, Firefox и других поддерживаемых браузеров.
+   - [Violentmonkey](https://violentmonkey.github.io/get-it/) для Chromium-браузеров и Firefox.
+2. Откройте [прямую ссылку установки](https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js).
+3. Подтвердите установку в Tampermonkey или Violentmonkey.
+4. Откройте или обновите Daggerheart.su.
 
-1. Клонируйте или скачайте репозиторий.
-2. Отключите версию для Tampermonkey, иначе элементы интерфейса будут добавлены дважды.
-3. Запустите проверку:
+Репозиторий должен оставаться публичным, чтобы прямая установка и автоматические обновления продолжали работать.
 
-   ```powershell
-   powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1
-   ```
+### Обновление старой установки
 
-4. Откройте `chrome://extensions`.
-5. Включите **Режим разработчика**.
-6. Нажмите **Загрузить распакованное расширение** и выберите корень репозитория — папку с `manifest.json`.
-7. Откройте Daggerheart.su и проверьте карточки, фильтр рейтинга, очередь и страницу печати.
+В metadata сохранены прежние `@name` и `@namespace`, поэтому установка версии 7.0.3 из GitHub должна заменить старую копию из Greasy Fork/Tampermonkey. После установки откройте панель userscript и убедитесь, что включена только одна копия.
 
-Для разработки отдельная компиляция не нужна. После изменения `src/content-script.js` или `manifest.json` перезагрузите расширение на `chrome://extensions`, затем обновите страницу сайта.
+## Поддерживаемые браузеры
 
-Хранилище `GM_*` в Tampermonkey изолировано от обычного хранилища сайта, поэтому текущая очередь печати не переносится автоматически. Перед переходом распечатайте или сохраните важную подборку.
+- Chrome, Brave и Edge с Tampermonkey или Violentmonkey.
+- Firefox с Tampermonkey или Violentmonkey.
 
-## Сборка ZIP для Chrome Web Store
-
-Одна команда подготовит ZIP, контрольную сумму и файлы для заполнения Web Store:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1
-```
-
-Чтобы одновременно установить следующую версию:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.1
-```
-
-Только сборка runtime-ZIP:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
-```
-
-Результат появится в `dist/daggerheart-su-companion-<version>.zip`. В ZIP попадают только файлы, нужные расширению, а `manifest.json` находится в корне архива.
+Публикация в Chrome Web Store и отдельный пакет для каждого браузера не нужны.
 
 ## Возможности
 
 - Рейтинги и поясняющие комментарии на русском и английском.
 - Фильтр по рейтингу в поддерживаемых справочниках.
-- Более информативные и единообразные карточки классов.
-- Выбор печатаемых карточек на разных страницах.
-- Перестановка и удаление карточек в локальном макете 3×3.
-- Смешанные родословные с собственным названием и текстом выбранных особенностей.
-- Печать на A4 без рейтингов и служебных кнопок расширения.
+- Более плотные карточки классов с рабочими ссылками на правила.
+- Общая локальная подборка карточек для печати.
+- Предпросмотр в три колонки, перестановка и удаление карточек.
+- Смешанные родословные с собственным названием и текстом особенностей.
+- Печать 3×3 на A4 без рейтингов и служебных кнопок.
+- Подчёркивание ограничений использования и восстановления только при печати.
 
-## Доступ и приватность
+## Приватность и разрешения
 
-Расширение работает только на `daggerheart.su` и `ru.daggerheart.su`. Оно не запрашивает доступ ко всем сайтам, истории, вкладкам, фоновому процессу или API `storage` Chrome.
+Userscript запускается только на `daggerheart.su` и `ru.daggerheart.su`. Три разрешения `GM_*` используются для локального хранения и синхронизации очереди печати. Аналитики, рекламы, телеметрии, удалённого исполняемого кода и сервера разработчика нет. Подробнее — в [PRIVACY.md](PRIVACY.md).
 
-Очередь печати и настройки хранятся локально в `localStorage`/`sessionStorage` сайта. Аналитики, аккаунтов и сервера разработчика нет. Полное описание — в [PRIVACY.md](PRIVACY.md).
+## Разработка и релиз
 
-## Публикация
+Устанавливаемый исходник находится в корне репозитория: `daggerheart-su-companion.user.js`.
 
-Следуйте инструкции [docs/PUBLISHING.md](docs/PUBLISHING.md). Перед публичным релизом отдельно проверьте разрешение на распространение рейтингов и комментариев, указанных в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Проверка:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1
+```
+
+Подготовка текущей версии к релизу:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1
+```
+
+Одновременное повышение версии и подготовка релиза:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.4
+```
+
+Полная инструкция: [docs/RELEASING.md](docs/RELEASING.md).
 
 ## Лицензия
 
-Оригинальный код расширения распространяется по [лицензии MIT](LICENSE). Она не распространяется на правила, иллюстрации, товарные знаки, рейтинги, комментарии и содержимое сайта — подробности в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Оригинальный код распространяется по [лицензии MIT](LICENSE). Она не распространяется на правила, иллюстрации, товарные знаки, рейтинги, комментарии и содержимое сайта — подробности в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Проект неофициальный и не связан с Darrington Press или Daggerheart.su.

@@ -1,9 +1,24 @@
-/**
- * Daggerheart.su Companion content script.
- *
- * Runs only on the daggerheart.su origins declared in manifest.json.
- * All preferences and print-queue data stay in the site's localStorage.
- */
+// ==UserScript==
+// @name         Daggerheart Companion: ratings, class cards & print
+// @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
+// @namespace    https://daggerheart.su/
+// @version      7.0.3
+// @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
+// @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
+// @author       artex-x
+// @license      MIT
+// @match        https://daggerheart.su/*
+// @match        https://ru.daggerheart.su/*
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_addValueChangeListener
+// @run-at       document-idle
+// @noframes
+// @homepageURL  https://github.com/artex-x/daggerheart-su-companion
+// @supportURL   https://github.com/artex-x/daggerheart-su-companion/issues
+// @downloadURL  https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
+// @updateURL    https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
+// ==/UserScript==
 
 (function () {
     'use strict';
@@ -692,7 +707,7 @@
                     "stars": 4,
                     "comment": {
                         "en": "Moving yourself or an ally to Very Far range for 1 Stress is an exceptional rate.",
-                        "ru": "Перемещение себя или союзника на Очень Далёкую дистанцию за 1 Стресс — исключительно выгодный обмен."
+                        "ru": "Перемещение себя или союзника на Очень Далекую дистанцию за 1 Стресс — исключительно выгодный обмен."
                     }
                 },
                 {
@@ -1265,7 +1280,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "Focus Cannon adds a useful Far-range attack.",
-                        "ru": "«Фокус-пушка» добавляет полезную атаку на Далёкой дистанции."
+                        "ru": "«Фокус-пушка» добавляет полезную атаку на Далекой дистанции."
                     }
                 },
                 "mastery": {
@@ -1447,8 +1462,8 @@
         "book-of-vagras": {
             "stars": 2,
             "comment": {
-                "en": "Runic Lock tricky; Reveal situational.",
-                "ru": "Рунический Замок хитрый; Раскройте ситуационную ситуацию."
+                "en": "Runic Lock is hard to land and Reveal is situational; Arcane Door is the most usable of the three.",
+                "ru": "Руническую печать трудно пройти, Раскрытие ситуативно; полезнее всего из трёх — Мистическая дверь."
             }
         },
         "book-of-sitil": {
@@ -1462,7 +1477,7 @@
             "stars": 4,
             "comment": {
                 "en": "Fireball is an exceptional free Very Far area attack and may be too strong.",
-                "ru": "«Огненный шар» — исключительная бесплатная атака по области на Очень Далёкой дистанции; возможно, слишком сильная."
+                "ru": "«Огненный шар» — исключительная бесплатная атака по области на Очень Далекой дистанции; возможно, слишком сильная."
             }
         },
         "book-of-korvax": {
@@ -1496,8 +1511,8 @@
         "manifest-wall": {
             "stars": 2,
             "comment": {
-                "en": "A flexible narrative barrier that can stop hazards, form a bridge, or support an escape. It is unreliable in combat because the GM can remove it with Fear.",
-                "ru": "Гибкая повествовательная преграда: может остановить угрозу, стать мостом или помочь отступить. В бою ненадёжна, потому что Мастер может убрать её за Страх."
+                "en": "A flexible narrative barrier that can stop hazards, form a bridge, or support an escape. Less reliable in combat: it needs a Spellcast Roll against 15 and works only once per rest.",
+                "ru": "Гибкая повествовательная преграда: может остановить угрозу, стать мостом или помочь отступить. В бою менее надёжна — нужен Бросок Заклинания против 15, и только один раз до следующего отдыха."
             }
         },
         "banish": {
@@ -1539,7 +1554,7 @@
             "stars": 2,
             "comment": {
                 "en": "Extra downtime action can pay for itself.",
-                "ru": "Дополнительные действия во время простоя могут окупиться."
+                "ru": "Дополнительный Ход Отдыха может окупиться."
             }
         },
         "book-of-ronin": {
@@ -1749,7 +1764,7 @@
             "stars": 2,
             "comment": {
                 "en": "Requires Knowledge + Close range.",
-                "ru": "Требуются Знания и Средняя дистанция."
+                "ru": "Нужны Знание и Средняя дистанция."
             }
         },
         "ferocity": {
@@ -1818,8 +1833,8 @@
         "bone-touched": {
             "stars": 3,
             "comment": {
-                "en": "Primary stat boost is great.",
-                "ru": "Первичное повышение характеристик — это здорово."
+                "en": "A permanent +1 Agility, plus a once-per-rest way to turn a hit into a miss.",
+                "ru": "Постоянный +1 к Проворности плюс возможность раз за отдых превратить попадание в промах."
             }
         },
         "cruel-precision": {
@@ -1853,15 +1868,15 @@
         "splintering-strike": {
             "stars": 4,
             "comment": {
-                "en": "Far-range AoE with a bow.",
-                "ru": "урон по области дальнего действия с луком."
+                "en": "Spend a Hope to hit everyone in your weapon's range, then split your damage dice between them with an extra die per target.",
+                "ru": "За Надежду атакует всех противников в пределах дистанции вашего оружия, а урон вы распределяете между целями, добавляя каждой по дополнительной кости."
             }
         },
         "serenity": {
             "stars": 3,
             "comment": {
                 "en": "Great Stress clearer / Hope machine.",
-                "ru": "Великолепное средство для снятия стресса/машина надежды."
+                "ru": "Отлично снимает Стресс и щедро даёт Надежду."
             }
         },
         "deathrun": {
@@ -2008,7 +2023,7 @@
             "stars": 4,
             "comment": {
                 "en": "Far-range area damage that can hit every enemy for Severe damage.",
-                "ru": "Урон по области на Далёкой дистанции, способный нанести всем врагам Тяжёлый урон."
+                "ru": "Урон по области на Далекой дистанции, способный нанести всем врагам Тяжёлый урон."
             }
         },
         "adjust-reality": {
@@ -2140,8 +2155,8 @@
         "master-of-the-craft": {
             "stars": 4,
             "comment": {
-                "en": "Experience buff without loadout cost.",
-                "ru": "Усиление опыта без затрат на снаряжение."
+                "en": "A permanent Experience bonus, and the card vaults itself so it stops costing you a loadout slot.",
+                "ru": "Постоянный бонус к Опыту: карта уходит в Хранилище и перестаёт занимать место в Руке."
             }
         },
         "copycat": {
@@ -2295,7 +2310,7 @@
             "stars": 2,
             "comment": {
                 "en": "1 Stress → 1 Hope is good.",
-                "ru": "1 Стресс → 1 Надежда – это хорошо."
+                "ru": "1 Стресс → 1 Надежда — это хорошо."
             }
         },
         "unbreakable": {
@@ -2344,7 +2359,7 @@
             "stars": 2,
             "comment": {
                 "en": "The spirit combines carrying utility with a Very Far attack, but the Hope cost and modest damage limit it.",
-                "ru": "Дух может переносить предметы и атаковать с Очень Далёкой дистанции, но стоимость в Надежде и скромный урон ограничивают пользу."
+                "ru": "Дух может переносить предметы и атаковать с Очень Далекой дистанции, но стоимость в Надежде и скромный урон ограничивают пользу."
             }
         },
         "chokehold": {
@@ -2463,7 +2478,7 @@
             "stars": 3,
             "comment": {
                 "en": "Good far-range + Restrain.",
-                "ru": "Далёкая атака с состоянием «Обездвижен»."
+                "ru": "Хорошая атака на Далекой дистанции с состоянием «Обездвижен»."
             }
         },
         "gifted-tracker": {
@@ -2547,7 +2562,7 @@
             "stars": 2,
             "comment": {
                 "en": "Only when nothing better on downtime.",
-                "ru": "Только когда нет ничего лучше на простое."
+                "ru": "Только если на Отдыхе нечем заняться лучше."
             }
         },
         "sage-touched": {
@@ -2610,7 +2625,7 @@
             "stars": 3,
             "comment": {
                 "en": "A good Far-range attack that applies Vulnerable.",
-                "ru": "Хорошая Далёкая атака, накладывающая состояние «Уязвим»."
+                "ru": "Хорошая Далекая атака, накладывающая состояние «Уязвим»."
             }
         },
         "mending-touch": {
@@ -2757,7 +2772,7 @@
             "stars": 3,
             "comment": {
                 "en": "Decent Far-range attack.",
-                "ru": "Достойная Далёкая атака."
+                "ru": "Достойная Далекая атака."
             }
         },
         "voice-of-dread": {
@@ -2791,7 +2806,7 @@
     };
 
     // =========================================================
-    // ИНТЕРФЕЙС DAGGERHEART.SU COMPANION
+    // ИНТЕРФЕЙС DAGGERHEART COMPANION
     // =========================================================
     const GUIDE_URL = "https://docs.google.com/document/d/e/2PACX-1vQWA9ybdUQJehEfBOO7DuT_xgrdK5lkuWCB3f38HuAgwmWrS9rRSDgZvD8O2Qlwf6RZY0mcE8LnQKwb/pub";
     const QUEUE_KEY = "dh-companion-print-queue-v2";
@@ -3060,6 +3075,11 @@
 
     function storageGet(key, fallback) {
         try {
+            if (typeof GM_getValue === "function") return GM_getValue(key, fallback);
+        } catch {
+            // Если API Tampermonkey недоступен, используем localStorage ниже.
+        }
+        try {
             const value = localStorage.getItem(key);
             return value == null ? fallback : JSON.parse(value);
         } catch {
@@ -3068,6 +3088,14 @@
     }
 
     function storageSet(key, value) {
+        try {
+            if (typeof GM_setValue === "function") {
+                GM_setValue(key, value);
+                return;
+            }
+        } catch {
+            // Если API Tampermonkey недоступен, используем localStorage ниже.
+        }
         try {
             localStorage.setItem(key, JSON.stringify(value));
         } catch {
@@ -4660,4 +4688,12 @@
         if (event.key === QUEUE_KEY) refreshQueueUi();
     });
     window.addEventListener("hashchange", () => location.reload());
+
+    try {
+        if (typeof GM_addValueChangeListener === "function") {
+            GM_addValueChangeListener(QUEUE_KEY, () => refreshQueueUi());
+        }
+    } catch {
+        // Для localStorage синхронизация вкладок работает через стандартное событие storage.
+    }
 })();

@@ -3,105 +3,89 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$manifestPath = Join-Path $repoRoot 'manifest.json'
-$contentScriptPath = Join-Path $repoRoot 'src\content-script.js'
+$scriptPath = Join-Path $repoRoot 'daggerheart-su-companion.user.js'
 
-foreach ($requiredPath in @(
-    $manifestPath,
-    $contentScriptPath,
-    (Join-Path $repoRoot '_locales\en\messages.json'),
-    (Join-Path $repoRoot '_locales\ru\messages.json')
-)) {
-    if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
-        throw "Required file is missing: $requiredPath"
+if (-not (Test-Path -LiteralPath $scriptPath -PathType Leaf)) {
+    throw "Installable userscript is missing: $scriptPath"
+}
+
+$source = Get-Content -LiteralPath $scriptPath -Raw -Encoding UTF8
+if (-not $source.StartsWith('// ==UserScript==')) {
+    throw 'The userscript metadata block must start at the first byte of the file.'
+}
+
+$metadataEnd = $source.IndexOf('// ==/UserScript==', [System.StringComparison]::Ordinal)
+if ($metadataEnd -lt 0) {
+    throw 'The userscript metadata block is not closed.'
+}
+$metadata = $source.Substring(0, $metadataEnd + '// ==/UserScript=='.Length)
+
+function Get-MetadataValues([string]$Key) {
+    $escaped = [System.Text.RegularExpressions.Regex]::Escape($Key)
+    return @([System.Text.RegularExpressions.Regex]::Matches(
+        $metadata,
+        '(?m)^//\s+@' + $escaped + '\s+(.+?)\s*$'
+    ) | ForEach-Object { $_.Groups[1].Value })
+}
+
+$requiredSingleValues = [ordered]@{
+    name = 'Daggerheart Companion: ratings, class cards & print'
+    namespace = 'https://daggerheart.su/'
+    license = 'MIT'
+    'run-at' = 'document-idle'
+    homepageURL = 'https://github.com/artex-x/daggerheart-su-companion'
+    supportURL = 'https://github.com/artex-x/daggerheart-su-companion/issues'
+    downloadURL = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
+    updateURL = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
+}
+foreach ($entry in $requiredSingleValues.GetEnumerator()) {
+    $values = @(Get-MetadataValues $entry.Key)
+    if ($values.Count -ne 1 -or $values[0] -ne $entry.Value) {
+        throw "Metadata @$($entry.Key) must equal: $($entry.Value)"
     }
 }
 
-$manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($manifest.manifest_version -ne 3) {
-    throw 'manifest_version must be 3.'
+$versionValues = @(Get-MetadataValues 'version')
+if ($versionValues.Count -ne 1 -or $versionValues[0] -notmatch '^\d+(\.\d+){1,3}$') {
+    throw 'Metadata @version must contain one numeric dotted version.'
 }
-if ($manifest.version -notmatch '^\d+(\.\d+){0,3}$') {
-    throw "Invalid Chrome extension version: $($manifest.version)"
-}
-if ($manifest.background -or $manifest.permissions -or $manifest.host_permissions) {
-    throw 'This extension should not declare background, permissions, or host_permissions entries.'
-}
-if ($manifest.default_locale -ne 'en') {
-    throw 'default_locale must be en.'
-}
-
-$localizedManifestFields = @('name', 'short_name', 'description')
-$localeMessages = @{}
-foreach ($locale in @('en', 'ru')) {
-    $messagesPath = Join-Path $repoRoot "_locales\$locale\messages.json"
-    $localeMessages[$locale] = Get-Content -LiteralPath $messagesPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-foreach ($field in $localizedManifestFields) {
-    $placeholder = [string]$manifest.$field
-    if ($placeholder -notmatch '^__MSG_([A-Za-z0-9_]+)__$') {
-        throw "Manifest field $field must use a localization placeholder."
-    }
-    $messageKey = $Matches[1]
-    foreach ($locale in @('en', 'ru')) {
-        if ($messageKey -notin $localeMessages[$locale].PSObject.Properties.Name) {
-            throw "Locale $locale is missing message key $messageKey."
-        }
-        $message = [string]$localeMessages[$locale].$messageKey.message
-        if ([string]::IsNullOrWhiteSpace($message)) {
-            throw "Locale $locale has an empty message for $messageKey."
-        }
-        if ($field -eq 'description' -and $message.Length -gt 132) {
-            throw "Locale $locale description exceeds Chrome's 132-character limit."
-        }
-        if ($field -eq 'short_name' -and $message.Length -gt 12) {
-            throw "Locale $locale short name exceeds 12 characters."
-        }
-    }
+if ($metadata -notmatch '(?m)^//\s+@noframes\s*$') {
+    throw 'Metadata must include @noframes.'
 }
 
 $expectedMatches = @('https://daggerheart.su/*', 'https://ru.daggerheart.su/*')
-$actualMatches = @($manifest.content_scripts[0].matches)
+$actualMatches = @(Get-MetadataValues 'match')
 if ($actualMatches.Count -ne $expectedMatches.Count -or @($actualMatches | Where-Object { $_ -notin $expectedMatches }).Count -gt 0) {
-    throw "Content-script matches must be limited to: $($expectedMatches -join ', ')"
-}
-if ($manifest.content_scripts.Count -ne 1 -or $manifest.content_scripts[0].run_at -ne 'document_idle') {
-    throw 'Exactly one document_idle content script must be declared.'
+    throw "@match must be limited to: $($expectedMatches -join ', ')"
 }
 
-$iconSizes = @(16, 32, 48, 128)
-Add-Type -AssemblyName System.Drawing
-foreach ($size in $iconSizes) {
-    $iconPath = Join-Path $repoRoot "icons\icon-$size.png"
-    if (-not (Test-Path -LiteralPath $iconPath -PathType Leaf)) {
-        throw "Required icon is missing: $iconPath"
-    }
-    $image = [System.Drawing.Image]::FromFile($iconPath)
-    try {
-        if ($image.Width -ne $size -or $image.Height -ne $size) {
-            throw "Icon icon-$size.png must be ${size}x${size}px."
-        }
-    } finally {
-        $image.Dispose()
+$expectedGrants = @('GM_getValue', 'GM_setValue', 'GM_addValueChangeListener')
+$actualGrants = @(Get-MetadataValues 'grant')
+if ($actualGrants.Count -ne $expectedGrants.Count -or @($actualGrants | Where-Object { $_ -notin $expectedGrants }).Count -gt 0) {
+    throw "@grant must be limited to: $($expectedGrants -join ', ')"
+}
+foreach ($api in $expectedGrants) {
+    if ($source -notmatch ('\b' + [System.Text.RegularExpressions.Regex]::Escape($api) + '\b')) {
+        throw "Declared API is not used: $api"
     }
 }
 
-$source = Get-Content -LiteralPath $contentScriptPath -Raw -Encoding UTF8
 $forbiddenPatterns = @(
-    @{ Name = 'userscript metadata'; Pattern = '==UserScript==' },
-    @{ Name = 'Tampermonkey API'; Pattern = '\bGM_[A-Za-z]+' },
+    @{ Name = 'remote dependency'; Pattern = '(?m)^//\s+@require\b' },
+    @{ Name = 'cross-origin permission'; Pattern = '(?m)^//\s+@connect\b' },
     @{ Name = 'dynamic evaluation'; Pattern = '\beval\s*\(|\bnew\s+Function\b' },
+    @{ Name = 'browser-extension API'; Pattern = '\b(?:chrome|browser)\.(?:runtime|storage|tabs|scripting)\b' },
     @{ Name = 'all-sites access'; Pattern = '<all_urls>' }
 )
 foreach ($entry in $forbiddenPatterns) {
     if ($source -match $entry.Pattern) {
-        throw "Forbidden $($entry.Name) found in content script."
+        throw "Forbidden $($entry.Name) found in userscript."
     }
 }
 
 $node = Get-Command node -ErrorAction SilentlyContinue
 if ($node) {
-    & $node.Source --check $contentScriptPath
+    & $node.Source --check $scriptPath
     if ($LASTEXITCODE -ne 0) {
         throw 'JavaScript syntax validation failed.'
     }
@@ -109,4 +93,4 @@ if ($node) {
     Write-Warning 'Node.js was not found; JavaScript syntax validation was skipped.'
 }
 
-Write-Output "Validation passed for Daggerheart.su Companion $($manifest.version)."
+Write-Output "Validation passed for Daggerheart.su Companion userscript $($versionValues[0])."

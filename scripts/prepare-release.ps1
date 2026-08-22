@@ -1,78 +1,77 @@
 [CmdletBinding()]
 param(
-    [ValidatePattern('^\d+(\.\d+){0,3}$')]
+    [ValidatePattern('^\d+(\.\d+){1,3}$')]
     [string]$Version
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$manifestPath = Join-Path $repoRoot 'manifest.json'
+$scriptPath = Join-Path $repoRoot 'daggerheart-su-companion.user.js'
 $utf8 = [System.Text.UTF8Encoding]::new($false)
 
 if ($Version) {
-    $manifestText = [System.IO.File]::ReadAllText($manifestPath, $utf8)
-    $manifest = $manifestText | ConvertFrom-Json
-    $currentVersion = [string]$manifest.version
+    $source = [System.IO.File]::ReadAllText($scriptPath, $utf8)
+    $versionMatch = [System.Text.RegularExpressions.Regex]::Match($source, '(?m)^(//\s+@version\s+)(\d+(?:\.\d+){1,3})(\s*)$')
+    if (-not $versionMatch.Success) {
+        throw 'Could not find a valid @version metadata line.'
+    }
+    $currentVersion = $versionMatch.Groups[2].Value
     if ($currentVersion -ne $Version) {
-        $escapedCurrent = [System.Text.RegularExpressions.Regex]::Escape($currentVersion)
-        $pattern = '("version"\s*:\s*")' + $escapedCurrent + '("\s*,)'
-        $updated = [System.Text.RegularExpressions.Regex]::Replace($manifestText, $pattern, '${1}' + $Version + '${2}', 1)
-        if ($updated -eq $manifestText) {
-            throw 'Could not update the version field in manifest.json.'
-        }
-        [System.IO.File]::WriteAllText($manifestPath, $updated, $utf8)
-        Write-Output "Updated manifest version: $currentVersion -> $Version"
+        $updated = $source.Substring(0, $versionMatch.Index) +
+            $versionMatch.Groups[1].Value + $Version + $versionMatch.Groups[3].Value +
+            $source.Substring($versionMatch.Index + $versionMatch.Length)
+        [System.IO.File]::WriteAllText($scriptPath, $updated, $utf8)
+        Write-Output "Updated userscript version: $currentVersion -> $Version"
     }
 }
 
 & (Join-Path $PSScriptRoot 'build.ps1')
 
-$manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-$artifactPath = Join-Path $repoRoot "dist\daggerheart-su-companion-$($manifest.version).zip"
-if (-not (Test-Path -LiteralPath $artifactPath -PathType Leaf)) {
-    throw "Expected extension artifact is missing: $artifactPath"
-}
-
-$releaseDirectory = Join-Path $repoRoot "dist\release-$($manifest.version)"
+$source = Get-Content -LiteralPath $scriptPath -Raw -Encoding UTF8
+$versionMatch = [System.Text.RegularExpressions.Regex]::Match($source, '(?m)^//\s+@version\s+(\d+(?:\.\d+){1,3})\s*$')
+$currentVersion = $versionMatch.Groups[1].Value
+$builtArtifact = Join-Path $repoRoot 'dist\daggerheart-su-companion.user.js'
+$releaseDirectory = Join-Path $repoRoot "dist\release-$currentVersion"
 [System.IO.Directory]::CreateDirectory($releaseDirectory) | Out-Null
 
-$releaseArtifact = Join-Path $releaseDirectory ([System.IO.Path]::GetFileName($artifactPath))
-Copy-Item -LiteralPath $artifactPath -Destination $releaseArtifact -Force
+$releaseArtifact = Join-Path $releaseDirectory 'daggerheart-su-companion.user.js'
+Copy-Item -LiteralPath $builtArtifact -Destination $releaseArtifact -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'README.md') -Destination (Join-Path $releaseDirectory 'README.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'PRIVACY.md') -Destination (Join-Path $releaseDirectory 'PRIVACY.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'CHANGELOG.md') -Destination (Join-Path $releaseDirectory 'CHANGELOG.md') -Force
-Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\STORE_LISTING.md') -Destination (Join-Path $releaseDirectory 'STORE_LISTING.md') -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\RELEASING.md') -Destination (Join-Path $releaseDirectory 'RELEASING.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\TESTING.md') -Destination (Join-Path $releaseDirectory 'TESTING.md') -Force
 
 $hash = (Get-FileHash -LiteralPath $releaseArtifact -Algorithm SHA256).Hash.ToLowerInvariant()
 [System.IO.File]::WriteAllText(
     (Join-Path $releaseDirectory 'SHA256SUMS.txt'),
-    "$hash  $([System.IO.Path]::GetFileName($releaseArtifact))`r`n",
+    "$hash  daggerheart-su-companion.user.js`r`n",
     $utf8
 )
 
 $releaseInfo = [ordered]@{
     name = 'Daggerheart.su Companion'
-    version = [string]$manifest.version
-    artifact = [System.IO.Path]::GetFileName($releaseArtifact)
+    version = $currentVersion
+    artifact = 'daggerheart-su-companion.user.js'
     sha256 = $hash
+    install_url = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
     prepared_at_utc = [DateTime]::UtcNow.ToString('o')
-    repository = 'https://github.com/artex-x/daggerheart-su-companion'
 } | ConvertTo-Json
 [System.IO.File]::WriteAllText((Join-Path $releaseDirectory 'release-info.json'), $releaseInfo + "`r`n", $utf8)
 
 $nextSteps = @"
-Daggerheart.su Companion $($manifest.version) is ready to upload.
+Daggerheart.su Companion $currentVersion is ready.
 
-1. Smoke-test the ZIP from this folder in chrome://extensions.
-2. Open https://chrome.google.com/webstore/devconsole/.
-3. Upload $([System.IO.Path]::GetFileName($releaseArtifact)).
-4. Use STORE_LISTING.md and the hosted PRIVACY.md when completing the dashboard.
-5. Submit for review.
+1. Complete the smoke tests in TESTING.md.
+2. Commit daggerheart-su-companion.user.js and push main.
+3. Open the raw install URL and verify the userscript manager offers version ${currentVersion}:
+   https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
+4. Optionally create a GitHub Release and attach this .user.js file.
 
 SHA-256: $hash
 "@
 [System.IO.File]::WriteAllText((Join-Path $releaseDirectory 'NEXT_STEPS.txt'), $nextSteps.Trim() + "`r`n", $utf8)
 
 Write-Output "Release kit: $releaseDirectory"
-Write-Output "Upload ZIP: $releaseArtifact"
+Write-Output "Userscript: $releaseArtifact"
 Write-Output "SHA256: $hash"

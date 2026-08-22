@@ -28,7 +28,7 @@ The root `daggerheart-su-companion.user.js` is both the source and the published
 
 1. Increase `@version` for any change to the userscript.
 2. Review `git diff`, especially the metadata block and ratings/comment changes.
-3. Run `scripts/validate.ps1` and, when ratings or aliases change, `scripts/audit-dread.ps1`.
+3. Run `scripts/validate.ps1`.
 4. Complete the relevant checks in `docs/TESTING.md` with the root userscript.
 5. Commit and push `main`.
 6. Confirm the `Validate userscript and verify sync` workflow succeeds.

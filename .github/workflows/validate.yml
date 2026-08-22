@@ -1,0 +1,44 @@
+name: Validate userscript and verify sync
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: userscript-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate source and deployment
+    runs-on: windows-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require a version bump on main
+        if: github.event_name == 'push'
+        shell: pwsh
+        run: ./scripts/assert-version-bump.ps1 -BaseSha '${{ github.event.before }}'
+
+      - name: Require a version bump in pull requests
+        if: github.event_name == 'pull_request'
+        shell: pwsh
+        run: ./scripts/assert-version-bump.ps1 -BaseSha '${{ github.event.pull_request.base.sha }}'
+
+      - name: Validate userscript
+        shell: pwsh
+        run: ./scripts/validate.ps1
+
+      - name: Verify Greasy Fork synchronization
+        if: github.event_name == 'push'
+        shell: pwsh
+        run: ./scripts/verify-greasy-fork-sync.ps1 -TimeoutSeconds 240 -PollIntervalSeconds 10

@@ -1,10 +1,22 @@
-# Generated release artifacts
+# Generated and temporary artifacts
 /dist/
+/tmp/
+/artifacts/
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
 
 # Local tooling
-node_modules/
-.idea/
-.vscode/
+/node_modules/
+/.idea/
+/.vscode/
 
 # Operating-system files
 .DS_Store

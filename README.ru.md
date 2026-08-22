@@ -53,17 +53,7 @@ Userscript запускается только на `daggerheart.su`, `en.dagger
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1
 ```
 
-Подготовка текущей версии к релизу:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1
-```
-
-Одновременное повышение версии и подготовка релиза:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.4
-```
+Для релиза повысьте `@version`, запустите проверку и нужные smoke-тесты, затем закоммитьте изменения и отправьте `main`. Webhook репозитория запускает синхронизацию корневого userscript с Greasy Fork, а GitHub Actions проверяет исходник и опубликованную версию. Генерировать release kit или артефакт `dist` не нужно.
 
 Полная инструкция: [docs/RELEASING.md](docs/RELEASING.md).
 

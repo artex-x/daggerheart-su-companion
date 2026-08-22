@@ -14,11 +14,11 @@ Thanks for improving Daggerheart.su Companion.
 
 ## Project constraints
 
-- Keep `@match` limited to the two Daggerheart.su origins.
+- Keep `@match` limited to the three supported Daggerheart.su origins.
 - Do not add remote executable code, `@require`, telemetry, ads, or tracking.
 - Add a new `@grant` only when a documented feature cannot use the existing APIs.
 - Treat ratings, translations, game text, art, and website content as third-party material.
 - Verify terminology against the site's current English and Russian text.
 - Avoid changing rating meaning or game mechanics when editing commentary.
 
-Do not commit generated `dist` artifacts.
+The root userscript is the distributable artifact. Do not commit generated copies or release bundles.

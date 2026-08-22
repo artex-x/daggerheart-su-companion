@@ -71,19 +71,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1
 
 For local testing, open the userscript manager, replace the script with the root file's contents, save, and refresh Daggerheart.su.
 
-## Prepare a release
+## Release
 
-To validate the script and assemble a release kit using its current version:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1
-```
-
-To bump the metadata version and prepare the release in one command:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.4
-```
+Increase `@version`, run validation and the relevant smoke tests, then commit and push `main`. The repository webhook asks Greasy Fork to synchronize the root userscript; GitHub Actions verifies the source and confirms that Greasy Fork published the same version. No generated release kit or `dist` artifact is required.
 
 See [docs/RELEASING.md](docs/RELEASING.md) and [docs/TESTING.md](docs/TESTING.md).
 

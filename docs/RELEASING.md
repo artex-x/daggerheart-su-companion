@@ -20,30 +20,19 @@
 
 The webhook secret is a GitHub repository-webhook setting, not an Actions environment variable. GitHub does not substitute `${{ secrets.GREASY_FORK_SECRET }}` or another variable into that field; paste the actual Greasy Fork secret and never commit it.
 
-The webhook fires independently of GitHub Actions. Protect `main` and require the validation workflow before merging if failed validation must prevent a public update. The workflow additionally requires a higher `@version` whenever the userscript changes and waits for the Greasy Fork API to report the pushed version.
+The webhook fires independently of GitHub Actions. Protect `main` and require the validation workflow before merging if failed validation must prevent a public update. The workflow requires a higher `@version` whenever the userscript changes and waits for the Greasy Fork API to report the pushed version.
 
-## One-command preparation
-
-From the repository root:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.4
-```
-
-The command updates `@version`, validates metadata and JavaScript, and creates `dist/release-<version>` containing the userscript, checksum, test checklist, privacy policy, license and third-party notices, changelog, and next steps.
-
-Omit `-Version` when the correct version is already present.
+The root `daggerheart-su-companion.user.js` is both the source and the published artifact. No build output or release kit is needed.
 
 ## Release checklist
 
-1. Review `git diff`, especially the metadata block and ratings/comment changes.
-2. Run `scripts/audit-dread.ps1`, then complete `docs/TESTING.md` with the root userscript.
-3. Commit the version change and push `main`.
-4. Confirm the `Validate and publish userscript` workflow passes both jobs. The second job verifies that the webhook synchronized the expected version to Greasy Fork.
-5. Open the public Greasy Fork page and confirm it shows the expected version.
-6. Install/update from Greasy Fork and confirm the manager shows only the three Daggerheart.su matches and three storage grants.
-7. Repeat a short ratings plus print-workspace smoke test.
-8. Optionally create a GitHub Release named `v<version>` and attach `dist/release-<version>/daggerheart-su-companion.user.js` plus `SHA256SUMS.txt` as source artifacts, not as an alternative installation channel.
+1. Increase `@version` for any change to the userscript.
+2. Review `git diff`, especially the metadata block and ratings/comment changes.
+3. Run `scripts/validate.ps1` and, when ratings or aliases change, `scripts/audit-dread.ps1`.
+4. Complete the relevant checks in `docs/TESTING.md` with the root userscript.
+5. Commit and push `main`.
+6. Confirm the `Validate userscript and verify sync` workflow succeeds.
+7. Confirm the public Greasy Fork page shows the expected version, then perform a short installed-script smoke test.
 
 ## Automatic updates
 

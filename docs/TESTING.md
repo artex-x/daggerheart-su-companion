@@ -27,7 +27,9 @@ Test the root `daggerheart-su-companion.user.js`, not a stale copy. Keep browser
 - [ ] The queue survives page reload through userscript-manager storage.
 - [ ] The review workspace uses the normal card presentation, not print-only class normalization.
 - [ ] Review cards contain no print-only usage markers.
+- [ ] Internal rule links in review cards show an unclipped tooltip on hover and keyboard focus, then navigate on click.
 - [ ] Reordering, deletion, and mixed ancestry work.
+- [ ] Dragging within the top or bottom activation zone scrolls continuously without requiring the pointer to touch the viewport edge.
 
 ## Print and PDF
 

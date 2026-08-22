@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.7 — 2026-08-22
+
+- Restored hover and keyboard-focus rule tooltips for links inside cards reconstructed in the print workspace.
+- Added smooth drag auto-scrolling with substantially larger activation zones near the top and bottom of the viewport.
+
 ## 7.0.6 — 2026-08-22
 
 - Matched spacing between class features to the natural paragraph rhythm of multi-feature domain and grimoire cards.

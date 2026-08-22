@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.6
+// @version      7.0.7
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -4241,6 +4241,54 @@
     }
 
     let draggedCardId = null;
+    let studioDragScrollFrame = 0;
+    let studioDragScrollSpeed = 0;
+
+    function stopStudioDragAutoScroll() {
+        studioDragScrollSpeed = 0;
+        if (studioDragScrollFrame) cancelAnimationFrame(studioDragScrollFrame);
+        studioDragScrollFrame = 0;
+    }
+
+    function runStudioDragAutoScroll() {
+        if (!draggedCardId || !studioDragScrollSpeed) {
+            studioDragScrollFrame = 0;
+            return;
+        }
+        const previousY = window.scrollY;
+        window.scrollBy(0, studioDragScrollSpeed);
+        if (window.scrollY === previousY) {
+            stopStudioDragAutoScroll();
+            return;
+        }
+        studioDragScrollFrame = requestAnimationFrame(runStudioDragAutoScroll);
+    }
+
+    function updateStudioDragAutoScroll(pointerY) {
+        if (!draggedCardId || document.documentElement.scrollHeight <= window.innerHeight) {
+            stopStudioDragAutoScroll();
+            return;
+        }
+        // Native HTML drag scrolling activates only within a few pixels of the
+        // viewport edge. A broad proportional zone is easier to hit while a
+        // full card is under the pointer, without making the centre scroll.
+        const zone = Math.min(220, Math.max(140, window.innerHeight * .18));
+        let direction = 0;
+        let strength = 0;
+        if (pointerY < zone) {
+            direction = -1;
+            strength = (zone - Math.max(0, pointerY)) / zone;
+        } else if (pointerY > window.innerHeight - zone) {
+            direction = 1;
+            strength = (Math.min(window.innerHeight, pointerY) - (window.innerHeight - zone)) / zone;
+        }
+        if (!direction) {
+            stopStudioDragAutoScroll();
+            return;
+        }
+        studioDragScrollSpeed = direction * Math.max(2, Math.round(24 * strength * strength));
+        if (!studioDragScrollFrame) studioDragScrollFrame = requestAnimationFrame(runStudioDragAutoScroll);
+    }
 
     function moveQueueItem(id, direction) {
         const queue = loadQueue();
@@ -4466,6 +4514,12 @@
         nativeWrap.className = "dh-studio-native-wrap card_holder normal";
         nativeWrap.innerHTML = item.html;
         nativeWrap.querySelectorAll(".dh-card-tools, .dh-pick-button, .dh-rating, .dh-rating-popover, script, iframe").forEach(node => node.remove());
+        // Stored cards contain markup only. Restore the hover/focus behavior
+        // for every internal rules reference after rebuilding the preview.
+        nativeWrap.querySelectorAll('a[href*="/rule/"]').forEach(link => {
+            link.draggable = false;
+            bindClassRuleLink(link);
+        });
         clearPrintUsageLimits(nativeWrap);
         nativeWrap.querySelectorAll("img").forEach(image => {
             image.removeAttribute("loading");
@@ -4516,6 +4570,7 @@
         });
         wrapper.addEventListener("dragend", () => {
             draggedCardId = null;
+            stopStudioDragAutoScroll();
             wrapper.classList.remove("dragging");
             document.querySelectorAll(".dh-studio-card.drag-before,.dh-studio-card.drag-after").forEach(node => {
                 node.classList.remove("drag-before", "drag-after");
@@ -4539,8 +4594,11 @@
             if (!draggedCardId || draggedCardId === item.id) return;
             const insertBefore = wrapper.classList.contains("drag-before");
             wrapper.classList.remove("drag-before", "drag-after");
+            const movedCardId = draggedCardId;
+            draggedCardId = null;
+            stopStudioDragAutoScroll();
             const queue = loadQueue();
-            const from = queue.findIndex(entry => entry.id === draggedCardId);
+            const from = queue.findIndex(entry => entry.id === movedCardId);
             if (from < 0) return;
             const [moved] = queue.splice(from, 1);
             const target = queue.findIndex(entry => entry.id === item.id);
@@ -4585,6 +4643,9 @@
         const empty = document.getElementById("dh-studio-empty");
         const count = document.getElementById("dh-studio-count");
         if (!grid || !empty) return;
+        draggedCardId = null;
+        stopStudioDragAutoScroll();
+        hideClassRuleTooltip();
         const queue = loadQueue();
         if (count) count.textContent = String(queue.length);
         grid.textContent = "";
@@ -4695,6 +4756,13 @@
         // Печатные листы вынесены прямо в body: скрытые элементы страницы
         // больше не участвуют в пагинации и не создают пустой последний лист.
         document.body.appendChild(printPages);
+        document.addEventListener("dragover", event => {
+            if (!draggedCardId) return;
+            event.preventDefault();
+            updateStudioDragAutoScroll(event.clientY);
+        });
+        document.addEventListener("drop", stopStudioDragAutoScroll);
+        window.addEventListener("blur", stopStudioDragAutoScroll);
         renderStudioCards();
     }
 

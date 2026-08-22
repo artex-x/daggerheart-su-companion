@@ -5,7 +5,7 @@ Test the root `daggerheart-su-companion.user.js`, not a stale copy. Keep browser
 ## Managers and browsers
 
 - [ ] `scripts/validate.ps1` passes.
-- [ ] The metadata install page shows the expected version, two site matches, and three `GM_*` grants.
+- [ ] The metadata install page shows the expected version, three site matches, and three `GM_*` grants.
 - [ ] Tampermonkey installs and runs the script in one Chromium browser.
 - [ ] Violentmonkey installs and runs the script in one Chromium browser.
 - [ ] Firefox with Tampermonkey or Violentmonkey is tested for browser-sensitive changes.
@@ -14,6 +14,7 @@ Test the root `daggerheart-su-companion.user.js`, not a stale copy. Keep browser
 
 ## Ratings and class cards
 
+- [ ] `scripts/audit-dread.ps1` confirms that all live English and Russian Dread cards resolve to ratings.
 - [ ] Ratings, filters, and popovers work in English and Russian.
 - [ ] Unsupported catalogs do not show a rating filter or print controls.
 - [ ] Class cards load their feature text and keep list formatting.

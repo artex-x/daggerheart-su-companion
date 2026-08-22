@@ -2,12 +2,13 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.3
+// @version      7.0.4
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
 // @license      MIT
 // @match        https://daggerheart.su/*
+// @match        https://en.daggerheart.su/*
 // @match        https://ru.daggerheart.su/*
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -19,6 +20,9 @@
 // @downloadURL  https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
 // @updateURL    https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
 // ==/UserScript==
+
+// MIT applies to original project code only. Daggerheart material and the ratings guide
+// retain their respective rights; see LICENSE-SCOPE.md and THIRD_PARTY_NOTICES.md.
 
 (function () {
     'use strict';
@@ -2778,8 +2782,8 @@
         "voice-of-dread": {
             "stars": 2,
             "comment": {
-                "en": "Applies Vulnerable and enemy Stress at no resource cost, but still requires a successful Spellcast Roll.",
-                "ru": "Без затрат накладывает состояние «Уязвим» и заставляет цель отметить Стресс, но требует успешного Броска Заклинания."
+                "en": "Applies Restrained and marks enemy Stress at no resource cost, but still requires a successful Spellcast Roll.",
+                "ru": "Без затрат временно делает цель Обездвиженной и заставляет отметить Стресс, но требует успешного Броска Заклинания."
             }
         },
         "umbral-veil": {
@@ -2792,8 +2796,8 @@
         "hideous-retribution": {
             "stars": 4,
             "comment": {
-                "en": "Deals damage without requiring a roll.",
-                "ru": "Наносит урон без дополнительного броска."
+                "en": "Strong reactive damage without spending an action; it costs Stress and requires a successful Reaction Roll.",
+                "ru": "Сильный ответный урон без отдельного действия; требует отметить Стресс и преуспеть в Броске Реакции."
             }
         },
         "siphon-essence": {
@@ -2802,8 +2806,130 @@
                 "en": "2–3 HP dealt and recovered.",
                 "ru": "Наносит и восстанавливает 2–3 Раны."
             }
+        },
+        "terrify": {
+            "stars": 3,
+            "comment": {
+                "en": "Marks several Stress, pushes an adversary one range away, and can make them Vulnerable; a key card for an adversary-Stress build.",
+                "ru": "Отмечает противнику несколько Стресса, отталкивает на одну ступень дистанции и может сделать Уязвимым; ключевая карта для сборки через Стресс противников."
+            }
+        },
+        "shared-trauma": {
+            "stars": 2,
+            "comment": {
+                "en": "Situational redistribution of marked Hit Points; its value depends on enemy focus fire and whether ordinary healing would be better.",
+                "ru": "Ситуативно перераспределяет отмеченные Раны; полезность зависит от того, сосредотачивают ли противники атаки на одном герое и не выгоднее ли обычное исцеление."
+            }
+        },
+        "chains-of-affliction": {
+            "stars": 3,
+            "comment": {
+                "en": "Costs 2 Stress, but can prevent substantial Hit Point loss if the party leaves the Chained adversary until last.",
+                "ru": "Стоит 2 Стресса, но может предотвратить много Ран, если группа оставит Скованного противника напоследок."
+            }
+        },
+        "summon-horror": {
+            "filterStars": 4,
+            "special": "problem",
+            "comment": {
+                "en": "The guide marks this 😬 instead of assigning stars: as written, it deals damage without an attack roll and can be spammed, so check for errata or agree on a table ruling.",
+                "ru": "В руководстве вместо звёзд стоит 😬: в текущем тексте урон наносится без броска атаки, поэтому повторное применение может создавать проблемы; проверьте эррату или согласуйте трактовку в группе."
+            }
+        },
+        "spectral-mist": {
+            "stars": 3,
+            "comment": {
+                "en": "Useful whole-party utility for passing through solid objects, with momentary immunity to physical damage; a similar Splendor option costs less Hope.",
+                "ru": "Полезная групповая магия для прохода сквозь твёрдые объекты и краткой невосприимчивости к физическому урону; похожий вариант домена Великолепия стоит меньше Надежды."
+            }
+        },
+        "dire-strike": {
+            "stars": 3,
+            "comment": {
+                "en": "Trading 1 Hope to remove 1 Fear is worthwhile, provided the build has a reliable Hope source.",
+                "ru": "Обмен 1 Надежды на снятие 1 Страха у Мастера выгоден, если у сборки есть надёжный источник Надежды."
+            }
+        },
+        "darkfire": {
+            "stars": 4,
+            "comment": {
+                "en": "Exceptionally strong because it deals damage without an action roll; spending 1 Hope will often deal about 2 Hit Points.",
+                "ru": "Исключительно сильная карта: урон наносится без броска действия; затрата 1 Надежды часто оборачивается примерно 2 Ранами."
+            }
+        },
+        "jump-scare": {
+            "stars": 3,
+            "comment": {
+                "en": "For 1 Stress, it moves you into Melee and makes the target Vulnerable until they mark a Hit Point; you need a ranged magic-damage source to trigger it.",
+                "ru": "За 1 Стресс перемещает вас Вплотную к цели и делает её Уязвимой, пока она не отметит Рану; для активации нужен дистанционный источник магического урона."
+            }
+        },
+        "dread-touched": {
+            "stars": 2,
+            "comment": {
+                "en": "Two Stress to deny 1 Fear is expensive, but the once-per-rest bonus can make an action roll nearly certain when the GM holds several Fear.",
+                "ru": "2 Стресса за отказ Мастеру в 1 Страхе — дорого, но раз за отдых бонус от накопленного Страха может сделать бросок действия почти гарантированно успешным."
+            }
+        },
+        "wall-of-hunger": {
+            "stars": 2,
+            "comment": {
+                "en": "Can mark enormous amounts of adversary Stress and defeat many minions, but ends when you mark a Hit Point; stay safe or spend Hope to recast it.",
+                "ru": "Может отметить противникам очень много Стресса и побеждать многих миньонов, но исчезает, когда вы отмечаете Рану; держитесь в безопасности или тратьте Надежду на повторное применение."
+            }
+        },
+        "dark-army": {
+            "stars": 3,
+            "comment": {
+                "en": "A strong pool of tokens that can add d8s to damage or reduce incoming damage.",
+                "ru": "Сильный запас жетонов, которые можно тратить на дополнительные d8 урона или снижение входящего урона."
+            }
+        },
+        "eldritch-flesh": {
+            "stars": 3,
+            "comment": {
+                "en": "Build-dependent: marked Stress raises your damage thresholds, while clearing Armor Slots costs substantial Hope.",
+                "ru": "Зависит от сборки: отмеченный Стресс повышает пороги урона, но очистка Ячейки Брони стоит много Надежды."
+            }
+        },
+        "damnation": {
+            "stars": 1,
+            "comment": {
+                "en": "At level 9, spending the 3–4 Stress usually needed to reach a Major threshold is too expensive.",
+                "ru": "На 9-м уровне обычно нужно отметить 3–4 Стресса, чтобы достичь Тяжёлого порога урона, — это слишком дорого."
+            }
+        },
+        "savor-the-anguish": {
+            "stars": 2,
+            "comment": {
+                "en": "Clears Stress over the course of the day if you or an ally can reliably deal Severe damage.",
+                "ru": "Очищает Стресс в течение дня, если вы или союзник стабильно наносите Тяжёлый урон."
+            }
+        },
+        "avatar-of-terror": {
+            "stars": 3,
+            "comment": {
+                "en": "Can add substantial damage when the GM holds Fear, and gaining Hope when that Fear is spent helps pay the form's action-roll cost.",
+                "ru": "Может значительно увеличить урон, пока у Мастера есть Страх; Надежда, получаемая при трате этого Страха, помогает оплачивать броски действия в этой форме."
+            }
+        },
+        "invoke-torment": {
+            "stars": 3,
+            "comment": {
+                "en": "A capstone for builds that fill adversary Stress: it doubles damage against fully stressed targets and rewards defeating them.",
+                "ru": "Завершающая карта для сборок, которые заполняют Стресс противников: удваивает урон по целям с полностью отмеченным Стрессом и даёт Надежду за их победу."
+            }
         }
     };
+
+    // Four Dread cards still expose pre-rename catalogue slugs on both site languages.
+    // Ratings use the current visible English card names as canonical keys.
+    const SLUG_ALIASES = Object.freeze({
+        "withering-affliction": "chains-of-affliction",
+        "nether-flames": "darkfire",
+        "wailing-leap": "jump-scare",
+        "avatar-of-malice": "avatar-of-terror"
+    });
 
     // =========================================================
     // ИНТЕРФЕЙС DAGGERHEART COMPANION
@@ -2862,6 +2988,8 @@
             ratingScale3: "Надёжный выбор без явных недостатков",
             ratingScale4: "Один из самых сильных вариантов",
             ratingScale5: "Исключительно сильный, определяющий сборку",
+            problemRating: "😬 — проблемная карта; автор не даёт числовую оценку",
+            specialRating: "особая оценка",
             unrated: "Без оценки",
             sourceNote: "Автор оценки: Borfknuckles. Оценка субъективна и зависит от кампании, состава группы и решений Мастера.",
             reviewHelp: "Перетаскивайте карточки: золотая полоса слева или справа показывает место вставки. Порядок идёт по строкам слева направо."
@@ -2923,6 +3051,8 @@
             ratingScale3: "A reliable choice with no major drawbacks",
             ratingScale4: "One of the strongest options",
             ratingScale5: "Exceptionally strong and build-defining",
+            problemRating: "😬 — problem card; the author gives no numeric rating",
+            specialRating: "special rating",
             unrated: "Not rated",
             sourceNote: "Rating author: Borfknuckles. The rating is subjective and depends on the campaign, party composition, and GM rulings.",
             reviewHelp: "Drag a card: the gold bar on its left or right shows the insertion point. Cards print row by row, left to right."
@@ -2994,13 +3124,15 @@
     function findSlug(card) {
         const candidates = slugCandidates(card);
         for (const candidate of candidates) {
-            if (ratings[candidate]) return candidate;
+            const canonical = SLUG_ALIASES[candidate] || candidate;
+            if (ratings[canonical]) return canonical;
             const match = candidate.match(/^(.*)-(foundation|specialization|mastery)$/);
             if (match && ratings[match[1]]?.stages?.[match[2]]) return candidate;
         }
         for (const candidate of candidates) {
             const withoutPlaytest = candidate.replace(/^playtest-/, "");
-            if (ratings[withoutPlaytest]) return withoutPlaytest;
+            const canonical = SLUG_ALIASES[withoutPlaytest] || withoutPlaytest;
+            if (ratings[canonical]) return canonical;
             const match = withoutPlaytest.match(/^(.*)-(foundation|specialization|mastery)$/);
             if (match && ratings[match[1]]?.stages?.[match[2]]) return withoutPlaytest;
         }
@@ -3018,6 +3150,9 @@
     function overallStars(data) {
         if (!data) return 0;
         if (data.stars != null) return clampStars(data.stars);
+        // A guide warning such as 😬 is not a numeric rating. filterStars only
+        // determines whether the card remains discoverable under a minimum filter.
+        if (data.filterStars != null) return clampStars(data.filterStars);
         if (data.features && data.features.length) {
             return clampStars(data.features[0].stars);
         }
@@ -3069,7 +3204,8 @@
             stages,
             featureNames,
             nestedRatings,
-            peak
+            peak,
+            special: data.special || ""
         };
     }
 
@@ -3420,7 +3556,9 @@
         } else {
             const heading = document.createElement("div");
             heading.className = "dh-rating-popover-title";
-            heading.textContent = meta.stars + "/5 — " + ratingScale(meta.stars);
+            heading.textContent = meta.special === "problem"
+                ? tr("problemRating")
+                : meta.stars + "/5 — " + ratingScale(meta.stars);
             popover.appendChild(heading);
 
             const note = document.createElement("p");
@@ -3519,16 +3657,17 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "dh-rating-pill";
-        button.setAttribute("aria-label", tr("rating") + ": " + meta.stars + "/5");
+        button.setAttribute("aria-label", tr("rating") + ": " + (meta.special === "problem" ? tr("specialRating") : meta.stars + "/5"));
         button.setAttribute("aria-expanded", "false");
 
         const stars = document.createElement("span");
         stars.className = "dh-rating-stars";
         stars.setAttribute("aria-hidden", "true");
-        stars.textContent = starText(meta.stars);
+        stars.textContent = meta.special === "problem" ? "😬" : starText(meta.stars);
         const number = document.createElement("span");
         number.className = "dh-rating-number";
         number.textContent = meta.stars + "/5";
+        number.hidden = meta.special === "problem";
         button.append(stars, number);
         if (meta.peak && meta.peak.stars > meta.stars) {
             const peak = document.createElement("span");

@@ -22,6 +22,6 @@ Daggerheart.su and the selected userscript manager have their own data practices
 
 ## Site scope and grants
 
-The userscript runs only on `https://daggerheart.su/*` and `https://ru.daggerheart.su/*`. Its grants are limited to `GM_getValue`, `GM_setValue`, and `GM_addValueChangeListener`, which provide local storage and cross-tab queue synchronization.
+The userscript runs only on `https://daggerheart.su/*`, `https://en.daggerheart.su/*`, and `https://ru.daggerheart.su/*`. Its grants are limited to `GM_getValue`, `GM_setValue`, and `GM_addValueChangeListener`, which provide local storage and cross-tab queue synchronization.
 
 Questions and privacy requests can be submitted at https://github.com/artex-x/daggerheart-su-companion/issues.

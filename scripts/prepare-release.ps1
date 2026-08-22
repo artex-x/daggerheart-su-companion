@@ -37,8 +37,12 @@ $releaseDirectory = Join-Path $repoRoot "dist\release-$currentVersion"
 $releaseArtifact = Join-Path $releaseDirectory 'daggerheart-su-companion.user.js'
 Copy-Item -LiteralPath $builtArtifact -Destination $releaseArtifact -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'README.md') -Destination (Join-Path $releaseDirectory 'README.md') -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'README.ru.md') -Destination (Join-Path $releaseDirectory 'README.ru.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'PRIVACY.md') -Destination (Join-Path $releaseDirectory 'PRIVACY.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'CHANGELOG.md') -Destination (Join-Path $releaseDirectory 'CHANGELOG.md') -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'LICENSE') -Destination (Join-Path $releaseDirectory 'LICENSE') -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'LICENSE-SCOPE.md') -Destination (Join-Path $releaseDirectory 'LICENSE-SCOPE.md') -Force
+Copy-Item -LiteralPath (Join-Path $repoRoot 'THIRD_PARTY_NOTICES.md') -Destination (Join-Path $releaseDirectory 'THIRD_PARTY_NOTICES.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\RELEASING.md') -Destination (Join-Path $releaseDirectory 'RELEASING.md') -Force
 Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\TESTING.md') -Destination (Join-Path $releaseDirectory 'TESTING.md') -Force
 

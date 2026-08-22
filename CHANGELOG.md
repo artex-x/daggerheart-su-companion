@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.4 — 2026-08-22
+
+- Added the 16 missing Dread ratings and bilingual source-derived commentary, completing all 21 cards from The Void v1.5.
+- Added aliases for four stale Dread catalogue slugs and direct support for `en.daggerheart.su`.
+- Preserved the guide's special 😬 rating for Summon Horror instead of inventing a displayed star score.
+- Added a repeatable live Dread audit covering both English and Russian catalogues.
+- Clarified that MIT covers only original code and documentation, and added DPCGL/playtest and ratings-guide license notices.
+
 ## 7.0.3 — 2026-08-22
 
 - Returned the repository to a free cross-browser userscript distribution.

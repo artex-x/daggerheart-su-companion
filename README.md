@@ -17,7 +17,7 @@ The repository must remain public for the raw installation and automatic-update 
 
 ### Updating an older installation
 
-The script keeps the previous `@name` and `@namespace`, so installing version 7.0.3 from GitHub should replace the older Greasy Fork/Tampermonkey copy. Check the userscript dashboard afterward and leave only one enabled copy.
+The script keeps the previous `@name` and `@namespace`, so installing version 7.0.4 from GitHub should replace the older Greasy Fork/Tampermonkey copy. Check the userscript dashboard afterward and leave only one enabled copy.
 
 ## Browser support
 
@@ -46,6 +46,7 @@ No Chrome Web Store purchase or browser-specific extension package is required.
 The userscript runs only on:
 
 - `https://daggerheart.su/*`
+- `https://en.daggerheart.su/*`
 - `https://ru.daggerheart.su/*`
 
 The three `GM_*` grants store and synchronize the local print queue. The script contains no analytics, advertising, telemetry, remote executable dependencies, or developer server. See [PRIVACY.md](PRIVACY.md).
@@ -84,6 +85,6 @@ See [docs/RELEASING.md](docs/RELEASING.md) and [docs/TESTING.md](docs/TESTING.md
 
 ## License and third-party material
 
-Original userscript code is available under the [MIT License](LICENSE). Daggerheart names, game content, artwork, ratings, commentary, and website content are not relicensed by this project; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Original userscript code and project documentation are available under the [MIT License](LICENSE). That license does not cover Daggerheart material, Daggerheart.su content, or Borfknuckles' guide. See [LICENSE-SCOPE.md](LICENSE-SCOPE.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) before redistributing or monetizing a fork.
 
-This project is independent and unofficial. It is not affiliated with or endorsed by Darrington Press or Daggerheart.su.
+This project is unofficial fan content and is not approved or endorsed in any way by Critical Role, Darrington Press, or Daggerheart.su.

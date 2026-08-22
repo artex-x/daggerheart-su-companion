@@ -9,6 +9,13 @@ if (-not (Test-Path -LiteralPath $scriptPath -PathType Leaf)) {
     throw "Installable userscript is missing: $scriptPath"
 }
 
+$requiredLegalFiles = @('LICENSE', 'LICENSE-SCOPE.md', 'THIRD_PARTY_NOTICES.md')
+foreach ($fileName in $requiredLegalFiles) {
+    if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $fileName) -PathType Leaf)) {
+        throw "Required license file is missing: $fileName"
+    }
+}
+
 $source = Get-Content -LiteralPath $scriptPath -Raw -Encoding UTF8
 if (-not $source.StartsWith('// ==UserScript==')) {
     throw 'The userscript metadata block must start at the first byte of the file.'
@@ -53,7 +60,7 @@ if ($metadata -notmatch '(?m)^//\s+@noframes\s*$') {
     throw 'Metadata must include @noframes.'
 }
 
-$expectedMatches = @('https://daggerheart.su/*', 'https://ru.daggerheart.su/*')
+$expectedMatches = @('https://daggerheart.su/*', 'https://en.daggerheart.su/*', 'https://ru.daggerheart.su/*')
 $actualMatches = @(Get-MetadataValues 'match')
 if ($actualMatches.Count -ne $expectedMatches.Count -or @($actualMatches | Where-Object { $_ -notin $expectedMatches }).Count -gt 0) {
     throw "@match must be limited to: $($expectedMatches -join ', ')"
@@ -67,6 +74,33 @@ if ($actualGrants.Count -ne $expectedGrants.Count -or @($actualGrants | Where-Ob
 foreach ($api in $expectedGrants) {
     if ($source -notmatch ('\b' + [System.Text.RegularExpressions.Regex]::Escape($api) + '\b')) {
         throw "Declared API is not used: $api"
+    }
+}
+
+$expectedDreadRatings = @(
+    'blighting-strike', 'voice-of-dread', 'umbral-veil', 'hideous-retribution',
+    'siphon-essence', 'terrify', 'shared-trauma', 'chains-of-affliction',
+    'summon-horror', 'spectral-mist', 'dire-strike', 'darkfire', 'jump-scare',
+    'dread-touched', 'wall-of-hunger', 'dark-army', 'eldritch-flesh',
+    'damnation', 'savor-the-anguish', 'avatar-of-terror', 'invoke-torment'
+)
+foreach ($slug in $expectedDreadRatings) {
+    $escapedSlug = [System.Text.RegularExpressions.Regex]::Escape($slug)
+    if ($source -notmatch ('(?m)^        "' + $escapedSlug + '": \{\r?$')) {
+        throw "Missing canonical Dread rating: $slug"
+    }
+}
+
+$expectedDreadAliases = [ordered]@{
+    'withering-affliction' = 'chains-of-affliction'
+    'nether-flames' = 'darkfire'
+    'wailing-leap' = 'jump-scare'
+    'avatar-of-malice' = 'avatar-of-terror'
+}
+foreach ($alias in $expectedDreadAliases.GetEnumerator()) {
+    $mapping = '"' + $alias.Key + '": "' + $alias.Value + '"'
+    if (-not $source.Contains($mapping)) {
+        throw "Missing Dread slug alias: $mapping"
     }
 }
 

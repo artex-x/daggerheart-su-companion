@@ -10,17 +10,17 @@ From the repository root:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-release.ps1 -Version 7.0.4
 ```
 
-The command updates `@version`, validates metadata and JavaScript, and creates `dist/release-<version>` containing the userscript, checksum, test checklist, privacy policy, changelog, and next steps.
+The command updates `@version`, validates metadata and JavaScript, and creates `dist/release-<version>` containing the userscript, checksum, test checklist, privacy policy, license and third-party notices, changelog, and next steps.
 
 Omit `-Version` when the correct version is already present.
 
 ## Release checklist
 
 1. Review `git diff`, especially the metadata block and ratings/comment changes.
-2. Complete `docs/TESTING.md` with the root userscript.
+2. Run `scripts/audit-dread.ps1`, then complete `docs/TESTING.md` with the root userscript.
 3. Commit the version change and push `main`.
 4. Open the [raw install URL](https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js) in a browser with Tampermonkey or Violentmonkey.
-5. Confirm the manager shows the expected version and only the two Daggerheart.su matches and three storage grants.
+5. Confirm the manager shows the expected version and only the three Daggerheart.su matches and three storage grants.
 6. Install/update and repeat a short ratings plus print-workspace smoke test.
 7. Optionally create a GitHub Release named `v<version>` and attach `dist/release-<version>/daggerheart-su-companion.user.js` plus `SHA256SUMS.txt`.
 

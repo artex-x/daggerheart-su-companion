@@ -58,7 +58,8 @@ $releaseInfo = [ordered]@{
     version = $currentVersion
     artifact = 'daggerheart-su-companion.user.js'
     sha256 = $hash
-    install_url = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
+    install_url = 'https://greasyfork.org/en/scripts/591859-daggerheart-companion-ratings-class-cards-print'
+    greasy_fork_update_url = 'https://greasyfork.org/en/scripts/591859/versions/new'
     prepared_at_utc = [DateTime]::UtcNow.ToString('o')
 } | ConvertTo-Json
 [System.IO.File]::WriteAllText((Join-Path $releaseDirectory 'release-info.json'), $releaseInfo + "`r`n", $utf8)
@@ -68,9 +69,10 @@ Daggerheart.su Companion $currentVersion is ready.
 
 1. Complete the smoke tests in TESTING.md.
 2. Commit daggerheart-su-companion.user.js and push main.
-3. Open the raw install URL and verify the userscript manager offers version ${currentVersion}:
-   https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
-4. Optionally create a GitHub Release and attach this .user.js file.
+3. Update the existing Greasy Fork listing from this .user.js file (or sync it from main):
+   https://greasyfork.org/en/scripts/591859/versions/new
+4. Verify the public listing shows version ${currentVersion}, then install/update from:
+   https://greasyfork.org/en/scripts/591859-daggerheart-companion-ratings-class-cards-print
 
 SHA-256: $hash
 "@

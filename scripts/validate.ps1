@@ -42,13 +42,17 @@ $requiredSingleValues = [ordered]@{
     'run-at' = 'document-idle'
     homepageURL = 'https://github.com/artex-x/daggerheart-su-companion'
     supportURL = 'https://github.com/artex-x/daggerheart-su-companion/issues'
-    downloadURL = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
-    updateURL = 'https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js'
 }
 foreach ($entry in $requiredSingleValues.GetEnumerator()) {
     $values = @(Get-MetadataValues $entry.Key)
     if ($values.Count -ne 1 -or $values[0] -ne $entry.Value) {
         throw "Metadata @$($entry.Key) must equal: $($entry.Value)"
+    }
+}
+
+foreach ($greasyForkManagedKey in @('downloadURL', 'updateURL', 'installURL')) {
+    if (@(Get-MetadataValues $greasyForkManagedKey).Count -gt 0) {
+        throw "Metadata @$greasyForkManagedKey must be omitted; Greasy Fork manages installation and update URLs when publishing."
     }
 }
 

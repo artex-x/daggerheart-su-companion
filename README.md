@@ -9,15 +9,15 @@ A free, cross-browser userscript for [Daggerheart.su](https://daggerheart.su/) a
 1. Install a userscript manager:
    - [Tampermonkey](https://www.tampermonkey.net/) for Chrome, Brave, Edge, Firefox, and other supported browsers.
    - [Violentmonkey](https://violentmonkey.github.io/get-it/) for Chromium browsers and Firefox.
-2. Open the [direct installation link](https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js).
+2. Open the [Daggerheart Companion page on Greasy Fork](https://greasyfork.org/en/scripts/591859-daggerheart-companion-ratings-class-cards-print) and choose **Install this script**.
 3. Confirm installation in the userscript manager.
 4. Open or refresh Daggerheart.su.
 
-The repository must remain public for the raw installation and automatic-update URLs to work.
+Greasy Fork is the primary installation and automatic-update channel. GitHub hosts the source code, documentation, and issue tracker.
 
 ### Updating an older installation
 
-The script keeps the previous `@name` and `@namespace`, so installing version 7.0.4 from GitHub should replace the older Greasy Fork/Tampermonkey copy. Check the userscript dashboard afterward and leave only one enabled copy.
+Install the current release from the same Greasy Fork page. The script keeps the existing `@name` and `@namespace`, so the userscript manager should offer an update instead of creating another script. Check its dashboard afterward and leave only one enabled copy.
 
 ## Browser support
 
@@ -58,6 +58,8 @@ The installable source is the root file:
 ```text
 daggerheart-su-companion.user.js
 ```
+
+Greasy Fork publishes this file and adds its own installation and update URLs. Do not add alternative `@downloadURL`, `@updateURL`, or `@installURL` metadata to the repository source.
 
 After editing it, run:
 

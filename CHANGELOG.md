@@ -9,6 +9,7 @@ All notable changes to this project are documented here.
 - Preserved the guide's special 😬 rating for Summon Horror instead of inventing a displayed star score.
 - Added a repeatable live Dread audit covering both English and Russian catalogues.
 - Clarified that MIT covers only original code and documentation, and added DPCGL/playtest and ratings-guide license notices.
+- Aligned installation and automatic updates with the existing Greasy Fork listing, leaving GitHub as the canonical source and issue tracker.
 
 ## 7.0.3 — 2026-08-22
 

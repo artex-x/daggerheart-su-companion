@@ -9,15 +9,15 @@
 1. Установите менеджер userscript:
    - [Tampermonkey](https://www.tampermonkey.net/) для Chrome, Brave, Edge, Firefox и других поддерживаемых браузеров.
    - [Violentmonkey](https://violentmonkey.github.io/get-it/) для Chromium-браузеров и Firefox.
-2. Откройте [прямую ссылку установки](https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js).
+2. Откройте [страницу Daggerheart Companion на Greasy Fork](https://greasyfork.org/ru/scripts/591859-daggerheart-companion-ratings-class-cards-print) и нажмите **Установить этот скрипт**.
 3. Подтвердите установку в Tampermonkey или Violentmonkey.
 4. Откройте или обновите Daggerheart.su.
 
-Репозиторий должен оставаться публичным, чтобы прямая установка и автоматические обновления продолжали работать.
+Greasy Fork — основной канал установки и автоматических обновлений. В GitHub хранятся исходный код, документация и задачи проекта.
 
 ### Обновление старой установки
 
-В metadata сохранены прежние `@name` и `@namespace`, поэтому установка версии 7.0.4 из GitHub должна заменить старую копию из Greasy Fork/Tampermonkey. После установки откройте панель userscript и убедитесь, что включена только одна копия.
+Устанавливайте актуальную версию с той же страницы Greasy Fork. В metadata сохранены прежние `@name` и `@namespace`, поэтому менеджер userscript должен предложить обновление, а не создать ещё один скрипт. После установки откройте его панель и убедитесь, что включена только одна копия.
 
 ## Поддерживаемые браузеры
 
@@ -43,7 +43,7 @@ Userscript запускается только на `daggerheart.su`, `en.dagger
 
 ## Разработка и релиз
 
-Устанавливаемый исходник находится в корне репозитория: `daggerheart-su-companion.user.js`.
+Устанавливаемый исходник находится в корне репозитория: `daggerheart-su-companion.user.js`. Greasy Fork публикует этот файл и самостоятельно добавляет адреса установки и обновления. Не добавляйте в исходник альтернативные metadata `@downloadURL`, `@updateURL` или `@installURL`.
 
 Проверка:
 

@@ -17,8 +17,6 @@
 // @noframes
 // @homepageURL  https://github.com/artex-x/daggerheart-su-companion
 // @supportURL   https://github.com/artex-x/daggerheart-su-companion/issues
-// @downloadURL  https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
-// @updateURL    https://raw.githubusercontent.com/artex-x/daggerheart-su-companion/main/daggerheart-su-companion.user.js
 // ==/UserScript==
 
 // MIT applies to original project code only. Daggerheart material and the ratings guide

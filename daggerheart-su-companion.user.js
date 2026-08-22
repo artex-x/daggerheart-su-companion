@@ -3835,6 +3835,9 @@
     }
 
     const classDetailCache = new Map();
+    const classRuleTooltipCache = new Map();
+    let activeClassRuleLink = null;
+    let classRuleTooltip = null;
 
     function parseClassDetails(doc) {
         const main = doc.querySelector(".class .main_content");
@@ -3868,6 +3871,116 @@
         return request;
     }
 
+    function compactRuleSummary(value, limit = 360) {
+        const text = String(value || "").replace(/\s+/g, " ").trim();
+        if (text.length <= limit) return text;
+        const cut = text.slice(0, limit + 1);
+        const boundary = cut.lastIndexOf(" ");
+        return cut.slice(0, boundary > limit * 0.7 ? boundary : limit).trimEnd() + "…";
+    }
+
+    function fetchClassRuleTooltip(link) {
+        const href = link.href;
+        if (classRuleTooltipCache.has(href)) return classRuleTooltipCache.get(href);
+        const request = fetch(href, { credentials: "same-origin" })
+            .then(response => {
+                if (!response.ok) throw new Error("Rule tooltip request failed");
+                return response.text();
+            })
+            .then(html => {
+                const doc = new DOMParser().parseFromString(html, "text/html");
+                const main = doc.querySelector(".rules.rule .main_content, .rule .main_content");
+                const firstParagraph = main?.querySelector(":scope > p") || main?.querySelector("p");
+                return {
+                    title: (doc.title || link.textContent || "").split("|")[0].trim(),
+                    body: compactRuleSummary(firstParagraph?.textContent || "")
+                };
+            });
+        classRuleTooltipCache.set(href, request);
+        return request;
+    }
+
+    function positionClassRuleTooltip(link, tooltip) {
+        if (!link.isConnected || !tooltip.isConnected) return;
+        const anchorRect = link.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const margin = 8;
+        const viewportWidth = document.documentElement.clientWidth;
+        const left = Math.max(
+            margin,
+            Math.min(viewportWidth - tooltipRect.width - margin, anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2)
+        );
+        const above = anchorRect.top - tooltipRect.height - margin;
+        const top = above >= margin ? above : anchorRect.bottom + margin;
+        tooltip.style.left = Math.round(left + window.scrollX) + "px";
+        tooltip.style.top = Math.round(top + window.scrollY) + "px";
+    }
+
+    function ensureClassRuleTooltip(link) {
+        classRuleTooltip?.remove();
+        const tooltip = document.createElement("div");
+        tooltip.className = "tooltip dh-class-rule-tooltip";
+        tooltip.id = "dh-class-rule-tooltip";
+        tooltip.setAttribute("role", "tooltip");
+        const name = document.createElement("div");
+        name.className = "name";
+        name.textContent = link.textContent.trim();
+        const body = document.createElement("div");
+        body.className = "body";
+        const paragraph = document.createElement("p");
+        paragraph.textContent = isRu ? "Загрузка…" : "Loading…";
+        body.appendChild(paragraph);
+        tooltip.append(name, body);
+        document.body.appendChild(tooltip);
+        link.setAttribute("aria-describedby", tooltip.id);
+        classRuleTooltip = tooltip;
+        positionClassRuleTooltip(link, tooltip);
+        return { tooltip, name, paragraph };
+    }
+
+    function showClassRuleTooltip(link) {
+        if (activeClassRuleLink && activeClassRuleLink !== link) {
+            activeClassRuleLink.removeAttribute("aria-describedby");
+        }
+        activeClassRuleLink = link;
+        const view = ensureClassRuleTooltip(link);
+        fetchClassRuleTooltip(link)
+            .then(data => {
+                if (activeClassRuleLink !== link || classRuleTooltip !== view.tooltip) return;
+                view.name.textContent = data.title || link.textContent.trim();
+                view.paragraph.textContent = data.body || (isRu ? "Открыть правило" : "Open rule");
+                positionClassRuleTooltip(link, view.tooltip);
+            })
+            .catch(() => {
+                if (activeClassRuleLink !== link || classRuleTooltip !== view.tooltip) return;
+                view.paragraph.textContent = isRu
+                    ? "Нажмите, чтобы открыть полное правило."
+                    : "Select to open the full rule.";
+                positionClassRuleTooltip(link, view.tooltip);
+            });
+    }
+
+    function hideClassRuleTooltip(link) {
+        if (link && activeClassRuleLink !== link) return;
+        activeClassRuleLink?.removeAttribute("aria-describedby");
+        activeClassRuleLink = null;
+        classRuleTooltip?.remove();
+        classRuleTooltip = null;
+    }
+
+    function bindClassRuleLink(link) {
+        link.addEventListener("mouseenter", () => showClassRuleTooltip(link));
+        link.addEventListener("mouseleave", () => hideClassRuleTooltip(link));
+        link.addEventListener("focus", () => showClassRuleTooltip(link));
+        link.addEventListener("blur", () => hideClassRuleTooltip(link));
+        link.addEventListener("keydown", event => {
+            if (event.key === "Escape") hideClassRuleTooltip(link);
+        });
+        // Keep the link above the full-card navigation layer. Stopping bubbling
+        // prevents the card action without cancelling the link's own navigation.
+        link.addEventListener("click", event => event.stopPropagation());
+    }
+
     const CLASS_FEATURE_TAGS = new Set([
         "p", "ul", "ol", "li", "blockquote", "strong", "em", "b", "i", "br", "span", "small"
     ]);
@@ -3891,7 +4004,7 @@
                         output = document.createElement("a");
                         output.className = "dh-class-term";
                         output.href = url.href;
-                        output.addEventListener("click", event => event.stopPropagation());
+                        bindClassRuleLink(output);
                     }
                 } catch {
                     // Некорректная или внешняя ссылка останется обычным текстом.
@@ -4656,7 +4769,7 @@
             ".card.class.dh-class-native > .flex > .display { position:static !important; inset:auto !important; flex:1 1 auto !important; width:100% !important; height:auto !important; min-height:0 !important; }",
             ".card.class.dh-class-native .display > .text { width:100% !important; height:100% !important; min-height:0 !important; padding:2px 20px 14px !important; box-sizing:border-box; overflow:hidden; }",
             ".card.class.dh-class-native .display > .text > p.title { display:none !important; }",
-            ".dh-class-quick { display:grid; gap:8px; margin-top:0; color:#191724; font:12px/1.3 Roboto,sans-serif; text-align:left; }",
+            ".dh-class-quick { display:grid; gap:8px; margin-top:0; color:#191724; font-family:Overpass,sans-serif; font-size:12px; font-weight:500; line-height:1.2; text-align:left; }",
             ".dh-class-quick .dh-class-loading,.dh-class-quick .dh-class-fallback { margin:0; color:#777386; }",
             ".dh-class-feature-preview { min-width:0; }",
             ".dh-class-feature-preview strong { color:#191724; font-size:inherit; font-weight:800; line-height:inherit; }",
@@ -4667,6 +4780,7 @@
             ".dh-class-feature-preview li { margin:1px 0; padding-left:.1em; }",
             ".dh-class-feature-preview blockquote { padding-left:.65em; border-left:2px solid rgba(25,23,36,.28); color:#494556; font-size:.9em; }",
             ".dh-class-feature-preview .dh-class-term { position:relative; z-index:6; color:inherit; text-decoration:underline dotted; text-underline-offset:2px; cursor:pointer; }",
+            ".dh-class-rule-tooltip { position:absolute; z-index:10000; width:320px; max-width:calc(100vw - 20px); box-sizing:content-box; pointer-events:none; }",
             ".card.ancestry.dh-mixed-ancestry .image { overflow:hidden; background:#d8d8d8; }",
             ".dh-mixed-ancestry-placeholder { display:grid; place-content:center; justify-items:center; gap:5px; width:100%; height:100%; min-height:245px; color:#747474; background:repeating-linear-gradient(-28deg,#eeeeee 0,#eeeeee 18px,#dcdcdc 18px,#dcdcdc 36px); box-sizing:border-box; text-transform:uppercase; }",
             ".dh-mixed-ancestry-placeholder span { font-size:72px; line-height:1; opacity:.52; }",

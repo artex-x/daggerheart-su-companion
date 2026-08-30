@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.10 — 2026-08-30
+
+- Re-audited ratings and bilingual commentary against the updated author guide and Hope & Fear errata.
+- Replaced Summon Horror's obsolete emoji state with its post-errata 4/5 rating and removed the dead special-rating UI branch.
+- Updated changed ratings, corrected Daggerheart terminology, and removed the unsupported Swift Step rating.
+
 ## 7.0.9 — 2026-08-22
 
 - Replaced the redundant 3 × 3 size recommendation with actionable A4 print-dialog settings in Russian and English.

@@ -95,6 +95,24 @@ foreach ($slug in $expectedDreadRatings) {
     }
 }
 
+$expectedCurrentRatings = [ordered]@{
+    'summon-horror' = 4
+    'darkfire' = 4
+    'ferocity' = 0
+}
+foreach ($rating in $expectedCurrentRatings.GetEnumerator()) {
+    $escapedSlug = [System.Text.RegularExpressions.Regex]::Escape($rating.Key)
+    $pattern = '(?m)^        "' + $escapedSlug + '": \{\r?\n            "stars": ' + $rating.Value + ',?\r?$'
+    if ($source -notmatch $pattern) {
+        throw "Expected current rating $($rating.Key)=$($rating.Value) was not found."
+    }
+}
+if ($source -match '(?m)^\s+"(?:special|filterStars)":' -or
+    $source -match '\bmeta\.special\b' -or
+    $source -match '\b(?:problemRating|specialRating)\b') {
+    throw 'Obsolete special-rating behavior is present.'
+}
+
 $expectedSlugAliases = [ordered]@{
     'fighter' = 'brawler'
     'withering-affliction' = 'chains-of-affliction'

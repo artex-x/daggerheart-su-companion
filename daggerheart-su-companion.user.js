@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.9
+// @version      7.0.10
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -184,10 +184,10 @@
             }
         },
         "duneborne": {
-            "stars": 3,
+            "stars": 4,
             "comment": {
-                "en": "A flexible reroll for a downtime-move die, but it only matters when the chosen move uses a roll.",
-                "ru": "Позволяет перебросить кость Хода Отдыха, но полезно лишь для ходов, где есть бросок."
+                "en": "The guide gives this 4/5, but its note discusses a different Oasis effect than the current SRD. The current reroll only helps downtime moves that use a die.",
+                "ru": "В актуальном руководстве стоит 4/5, но комментарий относится к другой версии «Оазиса», не совпадающей с текущим SRD. Нынешний переброс полезен только для Ходов Отдыха с броском кости."
             }
         },
         "freeborne": {
@@ -198,10 +198,10 @@
             }
         },
         "frostborne": {
-            "stars": 3,
+            "stars": 4,
             "comment": {
-                "en": "Clearing a Hit Point is valuable, though the trigger is situational.",
-                "ru": "Очистка Раны ценна, хотя условие срабатывания ситуативно."
+                "en": "Clearing a Hit Point on every rest is a strong community benefit, even when it does not change the immediate outcome.",
+                "ru": "Очистка Раны при каждом Отдыхе — сильное свойство сообщества, даже если эффект не всегда меняет ближайший исход."
             }
         },
         "hearthborne": {
@@ -373,10 +373,10 @@
             ]
         },
         "fungril": {
-            "stars": 2,
+            "stars": 1,
             "comment": {
-                "en": "Unusual and useful ways to gather information.",
-                "ru": "Необычные и полезные способы получать информацию."
+                "en": "The guide marks this 1/5 with uncertainty: both features pay for open-ended information, so their power depends heavily on the GM, though they are distinctive narrative tools.",
+                "ru": "Автор ставит 1/5 с оговоркой: оба свойства требуют платы за сведения с открытым результатом, поэтому их сила сильно зависит от Мастера, хотя повествовательно они необычны."
             }
         },
         "galapa": {
@@ -534,12 +534,12 @@
                     "stars": 1,
                     "comment": {
                         "en": "Powerful when active, but too many conditions must align before it prevents a Death Move.",
-                        "ru": "Сильно при срабатывании, но для предотвращения Хода Смерти должно совпасть слишком много условий."
+                        "ru": "Сильно при срабатывании, но для предотвращения Предсмертного Хода должно совпасть слишком много условий."
                     }
                 },
                 {
                     "name": "Tusks",
-                    "stars": 1,
+                    "stars": 0,
                     "comment": {
                         "en": "Deals less damage than the Faun’s Kick while spending the more valuable resource.",
                         "ru": "Наносит меньше урона, чем «Удар копытом» Фавна, и при этом тратит более ценный ресурс."
@@ -1132,7 +1132,7 @@
             }
         },
         "school-of-knowledge": {
-            "stars": 5,
+            "stars": 4,
             "stages": {
                 "foundation": {
                     "stars": 5,
@@ -1401,8 +1401,8 @@
         "werewolf": {
             "stars": 4,
             "comment": {
-                "en": "The extra d10 to attack and damage is extremely strong. Stress accumulates in battle and can make you lash out at allies, but the guide still considers this the best upside-to-drawback ratio.",
-                "ru": "Дополнительный d10 к атаке и урону чрезвычайно силён. В бою накапливается Стресс и появляется риск атаковать союзников, но руководство всё равно считает это лучшим соотношением выгоды и недостатка."
+                "en": "The extra d10 to attack and damage rolls is extremely strong. Under the errata, every roll with Hope in Wolf Form marks Stress and pushes you toward Howling Rampage, but the guide still considers this the best upside-to-drawback ratio.",
+                "ru": "Дополнительный d10 к Броскам Атаки и Урона чрезвычайно силён. По эррате каждый Бросок с Надеждой в Облике Волка требует отметить Стресс и приближает Бешенство, но автор всё равно считает это лучшим соотношением выгоды и недостатка."
             }
         },
         "reanimated": {
@@ -1741,13 +1741,6 @@
                 "ru": "Лучшая карта Домена Кости."
             }
         },
-        "swift-step": {
-            "stars": 3,
-            "comment": {
-                "en": "A reliable mobility option for Bone users.",
-                "ru": "Надёжный вариант мобильности для пользователей Домена Кости."
-            }
-        },
         "i-see-it-coming": {
             "stars": 2,
             "comment": {
@@ -1763,10 +1756,10 @@
             }
         },
         "ferocity": {
-            "stars": 1,
+            "stars": 0,
             "comment": {
-                "en": "The guide rates this among the weakest Domain cards.",
-                "ru": "Руководство оценивает её как одну из слабейших карт Домена."
+                "en": "The guide's only 0-star Domain card: spending 2 Hope for an unreliable chance to affect one attack is too costly, with no broader utility.",
+                "ru": "Единственная карта Домена с оценкой 0: тратить 2 Надежды ради ненадёжной попытки повлиять на одну атаку слишком дорого, а других применений у карты нет."
             }
         },
         "brace": {
@@ -2400,17 +2393,17 @@
             }
         },
         "mass-disguise": {
-            "stars": 2,
+            "stars": 3,
             "comment": {
-                "en": "Like Uncanny Disguise, but affects the whole party.",
-                "ru": "Как «Поразительная маскировка», но действует на всю группу."
+                "en": "A stronger, party-wide version of Uncanny Disguise.",
+                "ru": "Усиленная версия «Поразительной маскировки», действующая на всю группу."
             }
         },
         "dark-whispers": {
-            "stars": 2,
+            "stars": 3,
             "comment": {
-                "en": "Remote communication and questions are useful, but require prior physical contact with the target.",
-                "ru": "Дистанционная связь и вопросы полезны, но сначала нужно прикоснуться к цели."
+                "en": "Useful, flexible communication: despite the ominous framing, it works just as well for coordinating with allies.",
+                "ru": "Полезная и гибкая связь: несмотря на зловещую подачу, «Тёмный шёпот» так же хорошо подходит для общения с союзниками."
             }
         },
         "midnight-touched": {
@@ -2820,11 +2813,10 @@
             }
         },
         "summon-horror": {
-            "filterStars": 4,
-            "special": "problem",
+            "stars": 4,
             "comment": {
-                "en": "The guide marks this 😬 instead of assigning stars: as written, it deals damage without an attack roll and can be spammed, so check for errata or agree on a table ruling.",
-                "ru": "В руководстве вместо звёзд стоит 😬: в текущем тексте урон наносится без броска атаки, поэтому повторное применение может создавать проблемы; проверьте эррату или согласуйте трактовку в группе."
+                "en": "Errata limits it to once per scene. Damage without an attack roll remains very strong: expect Major damage, with a chance to also mark the target's Stress.",
+                "ru": "После эрраты свойство применяется раз за сцену. Урон без Броска Атаки остаётся очень сильным: обычно цель получает Ощутимый урон и может также отметить Стресс."
             }
         },
         "spectral-mist": {
@@ -2844,8 +2836,8 @@
         "darkfire": {
             "stars": 4,
             "comment": {
-                "en": "Exceptionally strong because it deals damage without an action roll; spending 1 Hope will often deal about 2 Hit Points.",
-                "ru": "Исключительно сильная карта: урон наносится без броска действия; затрата 1 Надежды часто оборачивается примерно 2 Ранами."
+                "en": "Errata limits it to once per scene. Damage without an attack roll remains very strong; each Hope can deal Major or Minor damage to one target.",
+                "ru": "После эрраты свойство применяется раз за сцену. Урон без Броска Атаки остаётся очень сильным: каждая Надежда может нанести одной цели Ощутимый или Легкий урон."
             }
         },
         "jump-scare": {
@@ -2887,7 +2879,7 @@
             "stars": 1,
             "comment": {
                 "en": "At level 9, spending the 3–4 Stress usually needed to reach a Major threshold is too expensive.",
-                "ru": "На 9-м уровне обычно нужно отметить 3–4 Стресса, чтобы достичь Тяжёлого порога урона, — это слишком дорого."
+                "ru": "На 9-м уровне обычно нужно отметить 3–4 Стресса, чтобы достичь порога Ощутимого урона, — это слишком дорого."
             }
         },
         "savor-the-anguish": {
@@ -2976,13 +2968,12 @@
             loadingClass: "Загружаем свойства класса…",
             classLoadFailed: "Подробности доступны на странице класса.",
             openClass: "Открыть класс",
+            ratingScale0: "По мнению автора, практически бесполезно",
             ratingScale1: "Ситуативный или слабый выбор",
             ratingScale2: "Рабочий вариант, но часто есть сильнее",
             ratingScale3: "Надёжный выбор без явных недостатков",
             ratingScale4: "Один из самых сильных вариантов",
             ratingScale5: "Исключительно сильный, определяющий сборку",
-            problemRating: "😬 — проблемная карта; автор не даёт числовую оценку",
-            specialRating: "особая оценка",
             unrated: "Без оценки",
             sourceNote: "Автор оценки: Borfknuckles. Оценка субъективна и зависит от кампании, состава группы и решений Мастера.",
             reviewHelp: "Перетаскивайте карточки: золотая полоса слева или справа показывает место вставки. Порядок идёт по строкам слева направо."
@@ -3039,13 +3030,12 @@
             loadingClass: "Loading class features…",
             classLoadFailed: "Details are available on the class page.",
             openClass: "Open class",
+            ratingScale0: "The guide considers this effectively unusable",
             ratingScale1: "Situational or underpowered",
             ratingScale2: "Useful, but stronger alternatives are common",
             ratingScale3: "A reliable choice with no major drawbacks",
             ratingScale4: "One of the strongest options",
             ratingScale5: "Exceptionally strong and build-defining",
-            problemRating: "😬 — problem card; the author gives no numeric rating",
-            specialRating: "special rating",
             unrated: "Not rated",
             sourceNote: "Rating author: Borfknuckles. The rating is subjective and depends on the campaign, party composition, and GM rulings.",
             reviewHelp: "Drag a card: the gold bar on its left or right shows the insertion point. Cards print row by row, left to right."
@@ -3143,9 +3133,6 @@
     function overallStars(data) {
         if (!data) return 0;
         if (data.stars != null) return clampStars(data.stars);
-        // A guide warning such as 😬 is not a numeric rating. filterStars only
-        // determines whether the card remains discoverable under a minimum filter.
-        if (data.filterStars != null) return clampStars(data.filterStars);
         if (data.features && data.features.length) {
             return clampStars(data.features[0].stars);
         }
@@ -3197,8 +3184,7 @@
             stages,
             featureNames,
             nestedRatings,
-            peak,
-            special: data.special || ""
+            peak
         };
     }
 
@@ -3555,9 +3541,7 @@
         } else {
             const heading = document.createElement("div");
             heading.className = "dh-rating-popover-title";
-            heading.textContent = meta.special === "problem"
-                ? tr("problemRating")
-                : meta.stars + "/5 — " + ratingScale(meta.stars);
+            heading.textContent = meta.stars + "/5 — " + ratingScale(meta.stars);
             popover.appendChild(heading);
 
             const note = document.createElement("p");
@@ -3656,17 +3640,16 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "dh-rating-pill";
-        button.setAttribute("aria-label", tr("rating") + ": " + (meta.special === "problem" ? tr("specialRating") : meta.stars + "/5"));
+        button.setAttribute("aria-label", tr("rating") + ": " + meta.stars + "/5");
         button.setAttribute("aria-expanded", "false");
 
         const stars = document.createElement("span");
         stars.className = "dh-rating-stars";
         stars.setAttribute("aria-hidden", "true");
-        stars.textContent = meta.special === "problem" ? "😬" : starText(meta.stars);
+        stars.textContent = starText(meta.stars);
         const number = document.createElement("span");
         number.className = "dh-rating-number";
         number.textContent = meta.stars + "/5";
-        number.hidden = meta.special === "problem";
         button.append(stars, number);
         if (meta.peak && meta.peak.stars > meta.stars) {
             const peak = document.createElement("span");

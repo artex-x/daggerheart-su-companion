@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.11 — 2026-08-30
+
+- Kept rating comments focused on current card mechanics instead of rule-revision history.
+- Clarified how Duneborne's Downtime Move reroll can improve Hit Point or Stress recovery.
+
 ## 7.0.10 — 2026-08-30
 
 - Re-audited ratings and bilingual commentary against the updated author guide and Hope & Fear errata.

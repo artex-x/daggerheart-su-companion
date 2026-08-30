@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.10
+// @version      7.0.11
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -186,8 +186,8 @@
         "duneborne": {
             "stars": 4,
             "comment": {
-                "en": "The guide gives this 4/5, but its note discusses a different Oasis effect than the current SRD. The current reroll only helps downtime moves that use a die.",
-                "ru": "В актуальном руководстве стоит 4/5, но комментарий относится к другой версии «Оазиса», не совпадающей с текущим SRD. Нынешний переброс полезен только для Ходов Отдыха с броском кости."
+                "en": "Rerolling a Downtime Move die can clear more Hit Points or Stress, a rare benefit from a community. It does nothing when the chosen move has a fixed result.",
+                "ru": "Переброс кости Хода Отдыха помогает очистить больше Ран или Стресса — редкая польза от Сообщества. Не помогает, если выбранный ход даёт фиксированный результат."
             }
         },
         "freeborne": {
@@ -1401,8 +1401,8 @@
         "werewolf": {
             "stars": 4,
             "comment": {
-                "en": "The extra d10 to attack and damage rolls is extremely strong. Under the errata, every roll with Hope in Wolf Form marks Stress and pushes you toward Howling Rampage, but the guide still considers this the best upside-to-drawback ratio.",
-                "ru": "Дополнительный d10 к Броскам Атаки и Урона чрезвычайно силён. По эррате каждый Бросок с Надеждой в Облике Волка требует отметить Стресс и приближает Бешенство, но автор всё равно считает это лучшим соотношением выгоды и недостатка."
+                "en": "The extra d10 to attack and damage rolls is extremely strong. Every roll with Hope in Wolf Form marks Stress and pushes you toward Howling Rampage, but the guide still considers this the best upside-to-drawback ratio.",
+                "ru": "Дополнительный d10 к Броскам Атаки и Урона чрезвычайно силён. Каждый Бросок с Надеждой в Облике Волка требует отметить Стресс и приближает Бешенство, но автор всё равно считает это лучшим соотношением выгоды и недостатка."
             }
         },
         "reanimated": {
@@ -2815,8 +2815,8 @@
         "summon-horror": {
             "stars": 4,
             "comment": {
-                "en": "Errata limits it to once per scene. Damage without an attack roll remains very strong: expect Major damage, with a chance to also mark the target's Stress.",
-                "ru": "После эрраты свойство применяется раз за сцену. Урон без Броска Атаки остаётся очень сильным: обычно цель получает Ощутимый урон и может также отметить Стресс."
+                "en": "Once per scene, it deals damage without an attack roll: expect Major damage, with a chance to also mark the target's Stress.",
+                "ru": "Раз за сцену наносит урон без Броска Атаки: обычно цель получает Ощутимый урон и может также отметить Стресс."
             }
         },
         "spectral-mist": {
@@ -2836,8 +2836,8 @@
         "darkfire": {
             "stars": 4,
             "comment": {
-                "en": "Errata limits it to once per scene. Damage without an attack roll remains very strong; each Hope can deal Major or Minor damage to one target.",
-                "ru": "После эрраты свойство применяется раз за сцену. Урон без Броска Атаки остаётся очень сильным: каждая Надежда может нанести одной цели Ощутимый или Легкий урон."
+                "en": "Once per scene, each Hope can deal Major or Minor damage to one target without an attack roll.",
+                "ru": "Раз за сцену каждая Надежда может нанести одной цели Ощутимый или Легкий урон без Броска Атаки."
             }
         },
         "jump-scare": {

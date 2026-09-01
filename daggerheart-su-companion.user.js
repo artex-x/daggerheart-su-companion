@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.14
+// @version      7.0.15
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -3827,7 +3827,10 @@
     const classDetailCache = new Map();
     const classRuleTooltipCache = new Map();
     const CLASS_BODY_MAX_FONT_SIZE = 12.5;
-    const CLASS_BODY_MIN_FLEX_INSET = 92;
+    // Give verbose classes a little more of the native image area before
+    // shrinking their rules text. Short cards reclaim the unused height below,
+    // so their final image/text balance stays unchanged.
+    const CLASS_BODY_MIN_FLEX_INSET = 72;
     const CLASS_BODY_MAX_FLEX_INSET = 192.5;
     let activeClassRuleLink = null;
     let classRuleTooltip = null;
@@ -4088,6 +4091,10 @@
         }
         requestAnimationFrame(() => fitClassCardText(card));
         setTimeout(() => fitClassCardText(card), 250);
+        // Refit after late web-font and image/layout changes. The early pass can
+        // otherwise measure a taller text area than the finished native frame.
+        setTimeout(() => fitClassCardText(card), 900);
+        document.fonts?.ready.then(() => fitClassCardText(card));
     }
 
     function fitClassCardText(card) {
@@ -4857,7 +4864,7 @@
             ".dh-toast.show { opacity:1; transform:translate(-50%,0); }",
             ".card.class.dh-class-native > a.button { position:absolute !important; inset:0 !important; z-index:5 !important; width:100% !important; height:100% !important; min-height:0 !important; padding:0 !important; border:0 !important; border-radius:inherit !important; background:transparent !important; box-shadow:none !important; color:transparent !important; transform:none !important; }",
             ".card.class.dh-class-native > a.button:focus-visible { outline:3px solid var(--dh-ui-gold) !important; outline-offset:2px; }",
-            ".card.class.dh-class-native > .flex { inset:92px 0 0 !important; height:auto !important; min-height:0 !important; }",
+            ".card.class.dh-class-native > .flex { inset:72px 0 0 !important; height:auto !important; min-height:0 !important; }",
             ".card.class.dh-class-native > .flex > .display { position:static !important; inset:auto !important; flex:1 1 auto !important; width:100% !important; height:auto !important; min-height:0 !important; }",
             ".card.class.dh-class-native .display > .text { width:100% !important; height:100% !important; min-height:0 !important; padding:2px 20px 14px !important; box-sizing:border-box; overflow:hidden; }",
             ".card.class.dh-class-native .display > .text > p.title { display:none !important; }",

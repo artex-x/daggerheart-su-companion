@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.15 — 2026-09-01
+
+- Let text-heavy class cards use a little more vertical space before reducing their font size.
+- Kept short class cards at their existing image/text balance by returning unused text space to the artwork.
+- Refit class typography after late font and native-frame layout changes to prevent edge-case overflow.
+
 ## 7.0.14 — 2026-09-01
 
 - Made compact class cards move their native white text panel down when the fitted rules text is shorter, revealing more artwork like native subclass cards.

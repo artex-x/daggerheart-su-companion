@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.13
+// @version      7.0.14
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -3416,6 +3416,7 @@
         cards.forEach(card => {
             const quick = card.querySelector(".dh-class-quick");
             if (!quick) return;
+            card.querySelector(":scope > .flex")?.style.removeProperty("inset");
             const fittedSize = Number.parseFloat(card.dataset.dhClassFontSize || quick.style.fontSize) || 10;
             const fittedGap = Number.parseFloat(quick.style.gap) || 6;
             // Экранная карточка имеет более высокую текстовую область. В печати
@@ -3826,6 +3827,8 @@
     const classDetailCache = new Map();
     const classRuleTooltipCache = new Map();
     const CLASS_BODY_MAX_FONT_SIZE = 12.5;
+    const CLASS_BODY_MIN_FLEX_INSET = 92;
+    const CLASS_BODY_MAX_FLEX_INSET = 192.5;
     let activeClassRuleLink = null;
     let classRuleTooltip = null;
 
@@ -4090,6 +4093,10 @@
     function fitClassCardText(card) {
         const quick = card.querySelector(".dh-class-quick");
         if (!quick || !card.offsetParent) return;
+        const flex = card.querySelector(":scope > .flex");
+        // Always measure from the largest available text area. A previous fit
+        // may have moved the native white panel down to expose more artwork.
+        flex?.style.removeProperty("inset");
         const cardRect = card.getBoundingClientRect();
         const quickRect = quick.getBoundingClientRect();
         const available = Math.floor(cardRect.bottom - quickRect.top - 14);
@@ -4124,10 +4131,21 @@
         // Keep features grouped at the top like native grimoire/domain cards.
         // Distributing spare height with space-between made the same logical
         // paragraph gap vary wildly according to the remaining card space.
-        quick.style.maxHeight = available + "px";
-        quick.style.overflow = quick.scrollHeight <= available + 1 ? "visible" : "hidden";
+        const fits = quick.scrollHeight <= available + 1;
+        const unusedHeight = fits ? Math.max(0, available - quick.scrollHeight) : 0;
+        const panelShift = Math.min(
+            CLASS_BODY_MAX_FLEX_INSET - CLASS_BODY_MIN_FLEX_INSET,
+            unusedHeight
+        );
+        if (flex) {
+            const inset = CLASS_BODY_MIN_FLEX_INSET + panelShift;
+            flex.style.setProperty("inset", inset.toFixed(2) + "px 0 0", "important");
+            card.dataset.dhClassFlexInset = inset.toFixed(2);
+        }
+        quick.style.maxHeight = Math.max(0, available - panelShift) + "px";
+        quick.style.overflow = fits ? "visible" : "hidden";
         card.dataset.dhClassFontSize = String(size);
-        card.dataset.dhClassFits = String(quick.scrollHeight <= available + 1);
+        card.dataset.dhClassFits = String(fits);
     }
 
     function buildClassCard(card) {

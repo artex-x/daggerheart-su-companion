@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.14 — 2026-09-01
+
+- Made compact class cards move their native white text panel down when the fitted rules text is shorter, revealing more artwork like native subclass cards.
+- Preserved a native-sized minimum text panel and reset the adaptive screen inset for print layouts.
+
 ## 7.0.13 — 2026-09-01
 
 - Capped compact class-card body text at 12.5px to match native subclass typography while retaining fit-to-card shrinking for longer classes.

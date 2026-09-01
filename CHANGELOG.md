@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.12 — 2026-09-01
+
+- Removed the four level-to-tier reference lines from Sneak Attack on the compact Rogue card while preserving them on the full class page.
+
 ## 7.0.11 — 2026-08-30
 
 - Kept rating comments focused on current card mechanics instead of rule-revision history.

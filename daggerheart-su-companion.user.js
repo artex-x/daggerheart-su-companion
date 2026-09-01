@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.11
+// @version      7.0.12
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -4026,6 +4026,20 @@
         return fragment;
     }
 
+    function removeCompactSneakAttackTierReference(card, feature, preview) {
+        if (!card.matches("#rogue,.rogue")) return;
+        const featureName = String(feature.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+        if (!["sneak attack", "скрытая атака"].includes(featureName)) return;
+
+        preview.querySelectorAll("p").forEach(paragraph => {
+            const text = (paragraph.textContent || "").replace(/\s+/g, " ").trim();
+            const isLevelToTierReference = /^(?:level|levels|уровень|уровни)(?:\s|$)/i.test(text)
+                && text.includes("→")
+                && paragraph.querySelector('a[href*="/rule/tiers-of-play"]');
+            if (isLevelToTierReference) paragraph.remove();
+        });
+    }
+
     function renderClassDetails(card, details) {
         const quick = card.querySelector(".dh-class-quick");
         if (!quick) return;
@@ -4061,6 +4075,10 @@
                     firstParagraph.remove();
                 }
                 preview.append(lead, body);
+                // Sneak Attack already states that its number of d6 equals the
+                // character's tier. The four level-to-tier reference lines are
+                // useful on the full rules page but waste space on a compact card.
+                removeCompactSneakAttackTierReference(card, feature, preview);
                 quick.appendChild(preview);
             });
         }

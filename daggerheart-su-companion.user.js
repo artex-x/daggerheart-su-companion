@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.12
+// @version      7.0.13
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -3825,6 +3825,7 @@
 
     const classDetailCache = new Map();
     const classRuleTooltipCache = new Map();
+    const CLASS_BODY_MAX_FONT_SIZE = 12.5;
     let activeClassRuleLink = null;
     let classRuleTooltip = null;
 
@@ -4098,10 +4099,10 @@
         quick.style.alignContent = "start";
         quick.style.maxHeight = "none";
         quick.style.overflow = "visible";
-        // Короткие описания используют свободную площадь карточки для более
-        // крупного текста; длинные уменьшаются только настолько, насколько
-        // нужно для сохранения фиксированного печатного размера.
-        let size = 18;
+        // Native subclass cards use roughly 12.4px body text. Keep short class
+        // descriptions within the same visual scale; longer cards shrink only
+        // as much as needed to preserve the fixed printable card size.
+        let size = CLASS_BODY_MAX_FONT_SIZE;
         while (size > 6.5) {
             quick.style.fontSize = size + "px";
             quick.style.lineHeight = size >= 15 ? "1.31" : size >= 13 ? "1.27" : size >= 10 ? "1.22" : "1.16";

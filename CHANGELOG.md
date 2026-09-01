@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.13 — 2026-09-01
+
+- Capped compact class-card body text at 12.5px to match native subclass typography while retaining fit-to-card shrinking for longer classes.
+- Kept the site's native class image height, which already matches subclass cards, instead of introducing a separate image-size override.
+
 ## 7.0.12 — 2026-09-01
 
 - Removed the four level-to-tier reference lines from Sneak Attack on the compact Rogue card while preserving them on the full class page.

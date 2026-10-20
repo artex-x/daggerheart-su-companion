@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.16 - 2026-10-20
+
+- Restored the rating for Swift Step, which the guide rates under its errata name Serenity. The site still uses the `swift-step` slug.
+- Corrected Russian card and feature names to match ru.daggerheart.su, for example «Касание милости», «Метка Следопыта», «Милость», «Сглаз», «Воющее Безумие» and «Облако тьмы».
+- Fixed comments that contradicted the card text or the guide, including Hedge, Vampire, Vengeance, Firbolg, Underborne, Wildborne and Book of Vagras.
+- Aligned Russian terminology with the site glossary: «очистить» for Stress and Hit Points, «Далекая дистанция», «Рука» and «Приспешник».
+- Added the ratings audit tool, a live-site verification workflow and an offline ratings structure check.
+
 ## 7.0.15 — 2026-09-01
 
 - Let text-heavy class cards use a little more vertical space before reducing their font size.

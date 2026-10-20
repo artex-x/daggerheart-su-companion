@@ -99,6 +99,7 @@ $expectedCurrentRatings = [ordered]@{
     'summon-horror' = 4
     'darkfire' = 4
     'ferocity' = 0
+    'swift-step' = 3
 }
 foreach ($rating in $expectedCurrentRatings.GetEnumerator()) {
     $escapedSlug = [System.Text.RegularExpressions.Regex]::Escape($rating.Key)
@@ -145,6 +146,10 @@ if ($node) {
     & $node.Source --check $scriptPath
     if ($LASTEXITCODE -ne 0) {
         throw 'JavaScript syntax validation failed.'
+    }
+    & $node.Source (Join-Path $PSScriptRoot 'check-ratings.mjs') $scriptPath
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Ratings structure validation failed.'
     }
 } else {
     Write-Warning 'Node.js was not found; JavaScript syntax validation was skipped.'

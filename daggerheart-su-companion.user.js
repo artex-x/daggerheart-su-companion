@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.15
+// @version      7.0.16
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -68,14 +68,14 @@
             "stars": 3,
             "comment": {
                 "en": "Top-tier Evasion and strong Bone–Sage access, but Ranger’s Focus is only average.",
-                "ru": "Высокое Уклонение и сильная связка Кости с Мудростью, но Фокус Следопыта лишь средний."
+                "ru": "Лучшее в игре Уклонение и сильная связка Кости с Мудростью, но Метка Следопыта лишь средняя."
             }
         },
         "rogue": {
             "stars": 3,
             "comment": {
                 "en": "High Evasion and strong utility, with more magic than a traditional Rogue.",
-                "ru": "Высокое Уклонение и сильная полезность, но больше магии, чем у классического Плута."
+                "ru": "Высокое Уклонение и широкие вспомогательные возможности и больше магии, чем у классического Плута."
             }
         },
         "seraph": {
@@ -96,7 +96,7 @@
             "stars": 3,
             "comment": {
                 "en": "Favor rewards careful resource management; Dread and Grace combine well.",
-                "ru": "Благосклонность требует расчёта ресурсов; Ужас и Грация хорошо сочетаются."
+                "ru": "Милость требует расчёта ресурсов; Ужас и Грация хорошо сочетаются."
             }
         },
         "warrior": {
@@ -110,7 +110,7 @@
             "stars": 3,
             "comment": {
                 "en": "A support and debuff class with reliable Hex and Charm tools.",
-                "ru": "Класс поддержки и ослабления врагов с надёжными Проклятиями и Очарованием."
+                "ru": "Класс поддержки и ослабления врагов с надёжными Сглазом и Очарованием Ведьмы."
             }
         },
         "wizard": {
@@ -130,22 +130,22 @@
         "underborne": {
             "stars": 1,
             "comment": {
-                "en": "Darkvision is often redundant because every adventurer can carry light.",
-                "ru": "Тёмное зрение часто избыточно, поскольку любой искатель приключений может взять источник света."
+                "en": "Its low-light advantage is often redundant because every adventurer starts with torches.",
+                "ru": "Преимущество при слабом освещении часто избыточно, поскольку каждый искатель приключений начинает игру с факелами."
             }
         },
         "wildborne": {
             "stars": 2,
             "comment": {
-                "en": "Useful advantage in wilderness scenes, but narrow elsewhere.",
-                "ru": "Полезное преимущество в дикой местности, но узкое за её пределами."
+                "en": "Useful advantage on rolls to move silently, but its value depends on the campaign.",
+                "ru": "Полезное преимущество при бесшумном передвижении, но его ценность зависит от кампании."
             }
         },
         "loreborne": {
             "stars": 3,
             "comment": {
-                "en": "Reliable advantage on knowledge and lore rolls.",
-                "ru": "Надёжное преимущество на бросках знаний и сведений о мире."
+                "en": "Reliable advantage on rolls about history, culture, and politics.",
+                "ru": "Надёжное преимущество при бросках, связанных с историей, культурой или политикой."
             }
         },
         "ridgeborne": {
@@ -187,7 +187,7 @@
             "stars": 4,
             "comment": {
                 "en": "Rerolling a Downtime Move die can clear more Hit Points or Stress, a rare benefit from a community. It does nothing when the chosen move has a fixed result.",
-                "ru": "Переброс кости Хода Отдыха помогает очистить больше Ран или Стресса — редкая польза от Сообщества. Не помогает, если выбранный ход даёт фиксированный результат."
+                "ru": "Переброс кости Хода Отдыха помогает очистить больше Ран или Стресса — редкая польза от сообщества. Не помогает, если выбранный ход даёт фиксированный результат."
             }
         },
         "freeborne": {
@@ -261,8 +261,8 @@
                     "name": "Elemental Breath",
                     "stars": 4,
                     "comment": {
-                        "en": "Convenient area damage for classes without early AoE; Instinct builds use it best.",
-                        "ru": "Удобный урон по области для классов без ранних массовых атак; особенно хорош при высоком Инстинкте."
+                        "en": "Convenient area damage for classes without early AoE; it usually relies on Instinct as an off-stat.",
+                        "ru": "Удобный урон по области для классов без ранних массовых атак; однако обычно опирается на Инстинкт как на второстепенную Характеристику."
                     }
                 }
             ]
@@ -282,8 +282,8 @@
                     "name": "Increased Fortitude",
                     "stars": 1,
                     "comment": {
-                        "en": "Three Hope is too expensive when the effect usually prevents no more than 1 Hit Point.",
-                        "ru": "3 Надежды слишком дороги для эффекта, который обычно спасает не больше 1 Раны."
+                        "en": "Three Hope is too expensive when the effect can never prevent more than 1 Hit Point.",
+                        "ru": "3 Надежды слишком дороги для эффекта, который никогда не спасает больше 1 Раны."
                     }
                 }
             ]
@@ -358,8 +358,8 @@
                     "name": "Charge",
                     "stars": 2,
                     "comment": {
-                        "en": "Situational as an attack, but useful when moving to Far range or hitting a large group anyway.",
-                        "ru": "Ситуативно как атака, но полезно при перемещении на Дальнюю дистанцию или против большой группы."
+                        "en": "Situational as an attack, but useful when you close in from Far range anyway or can hit a large group.",
+                        "ru": "Ситуативно как атака, но полезно, если вы и так сближаетесь с целями с Далекой дистанции или можете задеть большую группу."
                     }
                 },
                 {
@@ -471,7 +471,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "Reduces Downtime spent clearing Stress and becomes better for Stress-heavy builds.",
-                        "ru": "Экономит Ходы Отдыха на снятии Стресса и особенно полезно сборкам с частыми тратами Стресса."
+                        "ru": "Экономит Ходы Отдыха на очистке Стресса и особенно полезно сборкам с частыми тратами Стресса."
                     }
                 },
                 {
@@ -668,7 +668,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "Healing 1 Hit Point is a strong and dependable bottom ancestry feature.",
-                        "ru": "Исцеление 1 Раны — сильное и надёжное нижнее свойство родословной."
+                        "ru": "Очистка 1 Раны — сильное и надёжное нижнее свойство родословной."
                     }
                 }
             ]
@@ -865,8 +865,8 @@
                 "mastery": {
                     "stars": 3,
                     "comment": {
-                        "en": "Strong Hope generation and accuracy.",
-                        "ru": "Сильно повышает получение Надежды и точность."
+                        "en": "Strong Hope generation that also denies the GM Fear.",
+                        "ru": "Сильно повышает получение Надежды и лишает Мастера Страха."
                     }
                 }
             }
@@ -885,7 +885,7 @@
                     "stars": 2,
                     "comment": {
                         "en": "Only a modest improvement to Ranger’s Focus.",
-                        "ru": "Лишь умеренно усиливает Фокус Следопыта."
+                        "ru": "Лишь умеренно усиливает Метку Следопыта."
                     }
                 },
                 "mastery": {
@@ -904,21 +904,21 @@
                     "stars": 4,
                     "comment": {
                         "en": "The companion is a strong scouting and defensive tool.",
-                        "ru": "Спутник — сильный инструмент разведки и защиты."
+                        "ru": "Компаньон — сильный инструмент разведки и защиты."
                     }
                 },
                 "specialization": {
                     "stars": 3,
                     "comment": {
                         "en": "Good, practical companion upgrades.",
-                        "ru": "Хорошие и практичные улучшения спутника."
+                        "ru": "Хорошие и практичные улучшения компаньона."
                     }
                 },
                 "mastery": {
                     "stars": 3,
                     "comment": {
                         "en": "Solid late-game upgrades for the companion.",
-                        "ru": "Надёжные поздние улучшения спутника."
+                        "ru": "Надёжные поздние улучшения компаньона."
                     }
                 }
             }
@@ -963,7 +963,7 @@
                     "stars": 2,
                     "comment": {
                         "en": "Dark Cloud is underwhelming for this tier.",
-                        "ru": "«Тёмное облако» слабовато для этого Ранга."
+                        "ru": "«Облако тьмы» слабовато для этого Ранга."
                     }
                 },
                 "mastery": {
@@ -1015,7 +1015,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "An extra use of Sparing Touch is excellent.",
-                        "ru": "Дополнительное применение «Щадящего касания» очень ценно."
+                        "ru": "Дополнительное применение «Касания милости» очень ценно."
                     }
                 },
                 "mastery": {
@@ -1059,8 +1059,8 @@
                 "foundation": {
                     "stars": 2,
                     "comment": {
-                        "en": "The Hope Feature is weak; Elemental Shaping is mostly narrative.",
-                        "ru": "Свойство Надежды слабое; Управление Стихией в основном повествовательное."
+                        "en": "The Hope ability is weak; shaping the element is mostly narrative.",
+                        "ru": "Способность за Надежду слабая; управление стихией в основном повествовательное."
                     }
                 },
                 "specialization": {
@@ -1137,7 +1137,7 @@
                 "foundation": {
                     "stars": 5,
                     "comment": {
-                        "en": "The strongest Foundation Feature in the guide.",
+                        "en": "The best Foundation in the game, by the guide's rating.",
                         "ru": "Сильнейшее Свойство Основы по оценке руководства."
                     }
                 },
@@ -1151,8 +1151,8 @@
                 "mastery": {
                     "stars": 3,
                     "comment": {
-                        "en": "Another Domain card plus free Experiences.",
-                        "ru": "Ещё одна карта Домена и бесплатные Опыты."
+                        "en": "Another Domain card plus occasional free uses of Experiences.",
+                        "ru": "Ещё одна карта Домена и иногда бесплатное использование Опыта."
                     }
                 }
             }
@@ -1164,7 +1164,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "Extra Hit Points and a usable damage upgrade.",
-                        "ru": "Дополнительные Раны и рабочее усиление урона."
+                        "ru": "Дополнительная ячейка Раны и рабочее усиление урона."
                     }
                 },
                 "specialization": {
@@ -1197,7 +1197,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "A strong trade for dealing an extra Hit Point.",
-                        "ru": "Выгодный обмен ради дополнительной Раны урона."
+                        "ru": "Выгодный обмен Стресса на дополнительную Рану."
                     }
                 },
                 "mastery": {
@@ -1242,7 +1242,7 @@
                     "stars": 1,
                     "comment": {
                         "en": "Overcorrected and weakened too far from the playtest.",
-                        "ru": "После тестирования свойство ослабили слишком сильно."
+                        "ru": "После тестирования Основу ослабили слишком сильно."
                     }
                 },
                 "specialization": {
@@ -1275,7 +1275,7 @@
                     "stars": 3,
                     "comment": {
                         "en": "Focus Cannon adds a useful Far-range attack.",
-                        "ru": "«Фокус-пушка» добавляет полезную атаку на Далекой дистанции."
+                        "ru": "«Залп концентрации» добавляет полезную атаку на Далекой дистанции."
                     }
                 },
                 "mastery": {
@@ -1301,14 +1301,14 @@
                     "stars": 3,
                     "comment": {
                         "en": "Disadvantage in exchange for Favor is a good rate.",
-                        "ru": "Помеха в обмен на Благосклонность — выгодная цена."
+                        "ru": "Помеха в обмен на Милость — выгодная цена."
                     }
                 },
                 "mastery": {
                     "stars": 3,
                     "comment": {
-                        "en": "Strong damage prevention while Favor is full.",
-                        "ru": "Сильно предотвращает урон при полной Благосклонности."
+                        "en": "The best damage negation yet; full Favor lets you keep draining the most dangerous foe.",
+                        "ru": "Лучшее предотвращение урона на данный момент, а запас Милости позволяет раз за разом применять «Истощающее проклятье» к самому опасному врагу."
                     }
                 }
             }
@@ -1346,14 +1346,14 @@
                     "stars": 3,
                     "comment": {
                         "en": "Herbal Remedies and a flexible Talisman are both useful.",
-                        "ru": "«Травяные средства» и гибкий Талисман одинаково полезны."
+                        "ru": "«Лечебные травы» и гибкий «Зачарованный талисман» одинаково полезны."
                     }
                 },
                 "specialization": {
                     "stars": 4,
                     "comment": {
-                        "en": "Strong mobility plus advantage against Hexed targets.",
-                        "ru": "Сильная мобильность и преимущество против Проклятых целей."
+                        "en": "Talking to spirits plus advantage against Hexed targets.",
+                        "ru": "Разговор с духами и преимущество против целей со Сглазом."
                     }
                 },
                 "mastery": {
@@ -1386,7 +1386,7 @@
                     "stars": 2,
                     "comment": {
                         "en": "Usually weaker than simply increasing Hit Points or Evasion.",
-                        "ru": "Обычно слабее простого повышения Ран или Уклонения."
+                        "ru": "Обычно слабее простого получения ячеек Раны или Уклонения."
                     }
                 }
             }
@@ -1394,22 +1394,22 @@
         "vampire": {
             "stars": 3,
             "comment": {
-                "en": "Feeding costs Strength attacks and Stress. In return, a d20 Fear Die improves the chance of success but also makes rolling with Fear more likely.",
-                "ru": "Кормление требует атак Силы и Стресса. Взамен Кость Страха d20 повышает шанс успеха, но и вероятность броска со Страхом."
+                "en": "Feeding costs attacks and Stress. In return, a d20 Fear Die improves the chance of success but also makes rolling with Fear more likely.",
+                "ru": "Питание требует атак и Стресса. Взамен Кость Страха d20 повышает шанс успеха, но и вероятность броска со Страхом."
             }
         },
         "werewolf": {
             "stars": 4,
             "comment": {
                 "en": "The extra d10 to attack and damage rolls is extremely strong. Every roll with Hope in Wolf Form marks Stress and pushes you toward Howling Rampage, but the guide still considers this the best upside-to-drawback ratio.",
-                "ru": "Дополнительный d10 к Броскам Атаки и Урона чрезвычайно силён. Каждый Бросок с Надеждой в Облике Волка требует отметить Стресс и приближает Бешенство, но автор всё равно считает это лучшим соотношением выгоды и недостатка."
+                "ru": "Дополнительный d10 к Броскам Атаки и Урона чрезвычайно силён. Каждый Бросок с Надеждой в Облике Волка требует отметить Стресс и приближает «Воющее Безумие», но автор всё равно считает это лучшим соотношением выгоды и недостатка."
             }
         },
         "reanimated": {
             "stars": 3,
             "comment": {
                 "en": "A failed Risk It All Death Move still returns you to the fight, making you very hard to kill. The failure permanently removes one Hit Point slot.",
-                "ru": "Даже провал Предсмертного Хода «Рискнуть всем» возвращает вас в бой, поэтому вас очень трудно убить. За провал навсегда теряется одна ячейка Раны."
+                "ru": "Даже провал Предсмертного Хода «Рискнуть Всем» возвращает вас в бой, поэтому вас очень трудно убить. За провал навсегда теряется одна ячейка Раны."
             }
         },
         "shapeshifter": {
@@ -1437,14 +1437,14 @@
             "stars": 3,
             "comment": {
                 "en": "Slumber usable; Arcane Barrage scales poorly; Telepathy useful.",
-                "ru": "Сон можно использовать; Чародейский обстрел плохо масштабируется; Телепатия полезна."
+                "ru": "Дрёму можно использовать; Шквал арканы плохо масштабируется; Телепатия полезна."
             }
         },
         "book-of-tyfar": {
             "stars": 3,
             "comment": {
-                "en": "Wild Flame strong early; Magic Hand excellent.",
-                "ru": "Дикое пламя сильное в начале; Волшебная рука отлично."
+                "en": "Wild Flame strong early; Magic Hand always nifty.",
+                "ru": "Дикое пламя сильное в начале; Магическая рука всегда пригодится."
             }
         },
         "book-of-ava": {
@@ -1457,15 +1457,15 @@
         "book-of-vagras": {
             "stars": 2,
             "comment": {
-                "en": "Runic Lock is hard to land and Reveal is situational; Arcane Door is the most usable of the three.",
-                "ru": "Руническую печать трудно пройти, Раскрытие ситуативно; полезнее всего из трёх — Мистическая дверь."
+                "en": "Runic Lock is tricky to use and Arcane Door just gets the job done; Reveal is always handy, but many GMs allow the same with an Instinct Roll.",
+                "ru": "Руническую печать сложно применить, а Мистическая дверь просто выполняет свою задачу; Раскрытие всегда полезно, но многие Мастера разрешают то же самое броском Инстинкта."
             }
         },
         "book-of-sitil": {
             "stars": 3,
             "comment": {
                 "en": "Good for skullduggery.",
-                "ru": "Хорошо подходит для мошенничества."
+                "ru": "Хорошо подходит для скрытных проделок вне боя."
             }
         },
         "book-of-norai": {
@@ -1479,7 +1479,7 @@
             "stars": 3,
             "comment": {
                 "en": "Levitation is versatile and Rune Circle is reliable.",
-                "ru": "«Левитация» универсальна, а «Рунный круг» надёжен."
+                "ru": "«Левитация» универсальна, а «Круг рун» надёжен."
             }
         },
         "book-of-grynn": {
@@ -1493,7 +1493,7 @@
             "stars": 3,
             "comment": {
                 "en": "Provides a strong counterspell option.",
-                "ru": "Даёт сильный вариант «Контрзаклинания»."
+                "ru": "Даёт сильное контрзаклинание («Рассеивание»)."
             }
         },
         "teleport": {
@@ -1506,8 +1506,8 @@
         "manifest-wall": {
             "stars": 2,
             "comment": {
-                "en": "A flexible narrative barrier that can stop hazards, form a bridge, or support an escape. Less reliable in combat: it needs a Spellcast Roll against 15 and works only once per rest.",
-                "ru": "Гибкая повествовательная преграда: может остановить угрозу, стать мостом или помочь отступить. В бою менее надёжна — нужен Бросок Заклинания против 15, и только один раз до следующего отдыха."
+                "en": "A flexible narrative barrier that can stop hazards, form a bridge, or support an escape. Weaker in combat, because the GM can remove it with a Fear.",
+                "ru": "Гибкая повествовательная преграда: может остановить угрозу, стать мостом или помочь отступить. В бою слабее, потому что Мастер легко убирает её за Страх."
             }
         },
         "banish": {
@@ -1542,7 +1542,7 @@
             "stars": 2,
             "comment": {
                 "en": "Useful but not game-changing.",
-                "ru": "Полезно, но не меняет правила игры."
+                "ru": "Полезно, но не даёт решающего преимущества."
             }
         },
         "safe-haven": {
@@ -1556,7 +1556,7 @@
             "stars": 2,
             "comment": {
                 "en": "Transform is fun but weak for level 9.",
-                "ru": "Трансформация — это весело, но слабо для 9-го уровня."
+                "ru": "«Превращение» — это весело, но слабо для 9-го уровня."
             }
         },
         "disintegration-wave": {
@@ -1570,7 +1570,7 @@
             "stars": 2,
             "comment": {
                 "en": "Timejammer strong; Magic Immunity expensive.",
-                "ru": "Таймджаммер сильный; Магический иммунитет дорогой."
+                "ru": "«Искажение времени» сильное; Магический иммунитет дорогой."
             }
         },
         "transcendent-union": {
@@ -1625,8 +1625,8 @@
         "scramble": {
             "stars": 4,
             "comment": {
-                "en": "Avoiding one attack per rest typically saves 2–3 Hit Points; it is also easy to use once and move back to the Vault.",
-                "ru": "Отмена одной атаки за отдых обычно спасает 2–3 Раны; карту также удобно применить один раз и вернуть в Хранилище."
+                "en": "Avoiding one attack per rest typically saves 2-3 Hit Points; it is also easy to use once and move back to the Vault.",
+                "ru": "Отмена одной атаки за отдых обычно спасает 2-3 Раны; карту также удобно применить один раз и вернуть в Хранилище."
             }
         },
         "deadly-focus": {
@@ -1723,8 +1723,8 @@
         "onslaught": {
             "stars": 2,
             "comment": {
-                "en": "Rarely needed at level 10.",
-                "ru": "Редко требуется на 10 уровне."
+                "en": "The Major damage floor is rarely needed at level 10.",
+                "ru": "Нижний предел Ощутимого урона редко нужен на 10-м уровне."
             }
         },
         "deft-maneuvers": {
@@ -1766,14 +1766,14 @@
             "stars": 2,
             "comment": {
                 "en": "Useful with leftover armor.",
-                "ru": "Полезно с остатками брони."
+                "ru": "Полезно, когда остаются свободные Ячейки Брони."
             }
         },
         "tactician": {
             "stars": 3,
             "comment": {
                 "en": "Makes Helping much better.",
-                "ru": "Заметно усиливает Помощь Союзнику."
+                "ru": "Заметно усиливает Помощь союзнику."
             }
         },
         "boost": {
@@ -1787,14 +1787,14 @@
             "stars": 1,
             "comment": {
                 "en": "The effect is memorable when it works, but several uncommon conditions must align. Its low reliability makes the Loadout slot difficult to justify.",
-                "ru": "Эффект запоминается, когда срабатывает, но для этого должно совпасть несколько редких условий. Из-за низкой надёжности ему трудно оправдать место в Снаряжении."
+                "ru": "Эффект запоминается, когда срабатывает, но для этого должно совпасть несколько редких условий. Из-за низкой надёжности ему трудно оправдать место в Руке."
             }
         },
         "signature-move": {
             "stars": 2,
             "comment": {
                 "en": "Fun but not the biggest buff.",
-                "ru": "Весело, но не самый большой плюс."
+                "ru": "Весело, но не самое сильное усиление."
             }
         },
         "know-thy-enemy": {
@@ -1856,15 +1856,15 @@
         "splintering-strike": {
             "stars": 4,
             "comment": {
-                "en": "Spend a Hope to hit everyone in your weapon's range, then split your damage dice between them with an extra die per target.",
-                "ru": "За Надежду атакует всех противников в пределах дистанции вашего оружия, а урон вы распределяете между целями, добавляя каждой по дополнительной кости."
+                "en": "Once per long rest, spend a Hope to attack all adversaries in your weapon's range, then split your damage dice between them with an extra die per target.",
+                "ru": "Раз до следующего продолжительного отдыха за Надежду атакует всех противников в пределах дистанции вашего оружия, а урон вы распределяете между целями, добавляя каждой по дополнительной кости."
             }
         },
-        "serenity": {
+        "swift-step": {
             "stars": 3,
             "comment": {
-                "en": "Great Stress clearer / Hope machine.",
-                "ru": "Отлично снимает Стресс и щедро даёт Надежду."
+                "en": "Rated in the guide under its errata name, Serenity. A great Stress clearer that turns into a Hope source when you have no Stress to clear.",
+                "ru": "В руководстве оценена под названием из исправлений, Serenity. Отлично очищает Стресс, а когда очищать нечего, становится источником Надежды."
             }
         },
         "deathrun": {
@@ -1927,14 +1927,14 @@
             "stars": 2,
             "comment": {
                 "en": "A melee area attack with some environmental utility.",
-                "ru": "Атака по области Вплотную с дополнительным применением вне прямого урона."
+                "ru": "Атака по области Вплотную с пользой от окружения: врагов можно отбросить с обрыва или в опасную зону."
             }
         },
         "blink-out": {
             "stars": 2,
             "comment": {
                 "en": "One of many teleports.",
-                "ru": "Один из многих телепортов."
+                "ru": "Один из многих способов телепортации."
             }
         },
         "chain-lightning": {
@@ -1968,8 +1968,8 @@
         "arcana-touched": {
             "stars": 3,
             "comment": {
-                "en": "Small free boost + Hope conversion.",
-                "ru": "Небольшое бесплатное усиление и возможность преобразовать Надежду."
+                "en": "Small free boost + Hope/Fear Dice swap.",
+                "ru": "Небольшое бесплатное усиление и возможность поменять местами Кости Надежды и Страха."
             }
         },
         "cloaking-blast": {
@@ -2053,7 +2053,7 @@
             "stars": 2,
             "comment": {
                 "en": "One of the best ways to fill enemy Stress, making them Vulnerable and denying stronger Stress-spending abilities.",
-                "ru": "Один из лучших способов заполнить Стресс врага, сделав его Уязвимым и лишив сильных свойств с тратой Стресса."
+                "ru": "Один из лучших способов заполнить Стресс врага, сделав его Уязвимым и лишив его доступа к сильным свойствам, которые требуют Стресса."
             }
         },
         "invisibility": {
@@ -2137,7 +2137,7 @@
             "stars": 2,
             "comment": {
                 "en": "Wider Enrapture.",
-                "ru": "Усиленное «Очарование»."
+                "ru": "Массовая версия «Очарования»."
             }
         },
         "master-of-the-craft": {
@@ -2178,8 +2178,8 @@
         "i-am-your-shield": {
             "stars": 2,
             "comment": {
-                "en": "Requires exact positioning for a modest payoff; works best for Guardians.",
-                "ru": "Требует точной позиции ради умеренной выгоды; лучше всего работает у Стражей."
+                "en": "Requires exact positioning for a modest payoff; combos well with the Guardian's Unstoppable.",
+                "ru": "Требует точного позиционирования ради умеренной выгоды; хорошо сочетается с «Неудержимым» Стража."
             }
         },
         "bare-bones": {
@@ -2207,7 +2207,7 @@
             "stars": 2,
             "comment": {
                 "en": "Clearing 2 Stress from two characters is useful, but the failure trigger and Long Rest limit make it situational.",
-                "ru": "Снять по 2 Стресса с двух персонажей полезно, но условие провала и лимит Продолжительного Отдыха делают эффект ситуативным."
+                "ru": "Очистить по 2 Стресса у двух персонажей полезно, но условие провала и лимит Продолжительного Отдыха делают эффект ситуативным."
             }
         },
         "critical-inspiration": {
@@ -2220,8 +2220,8 @@
         "goad-them-on": {
             "stars": 2,
             "comment": {
-                "en": "It requires a successful Presence Roll and waits for the GM to spotlight the target, making the control unreliable.",
-                "ru": "Нужен успешный Бросок Влияния, а затем фокус Мастера на цели, поэтому контролировать её получается ненадёжно."
+                "en": "It effectively trades one of your actions for one adversary action, which is rarely the best use of a turn.",
+                "ru": "Нужен успешный Бросок Влияния, а затем Мастер должен активировать цель, поэтому такой контроль ненадёжен."
             }
         },
         "support-tank": {
@@ -2262,8 +2262,8 @@
         "valor-touched": {
             "stars": 2,
             "comment": {
-                "en": "The Armor bonus and conditional repair are useful, but committing four loadout slots to Valor is a high cost.",
-                "ru": "Бонус к Броне и условный ремонт полезны, но ради них нужно держать четыре карты Домена Доблести в Руке."
+                "en": "Generally good for a Touched card, though you may mark all your Hit Points before you use up all your Armor Slots.",
+                "ru": "Для карты типа «Затронутый» хорошая, хотя Раны могут закончиться раньше, чем Ячейки Брони."
             }
         },
         "shrug-it-off": {
@@ -2276,8 +2276,8 @@
         "full-surge": {
             "stars": 2,
             "comment": {
-                "en": "The trait bonus is broad, but 3 Stress is a steep cost for an effect usable once per long rest.",
-                "ru": "Бонус ко всем Характеристикам универсален, но 3 Стресса — высокая цена за эффект раз в Продолжительный Отдых."
+                "en": "The +2 bonus to all traits is just about worth the 3 Stress it costs, once per long rest.",
+                "ru": "Бонус +2 ко всем Характеристикам едва оправдывает цену в 3 Стресса; применяется раз до следующего продолжительного отдыха."
             }
         },
         "ground-pound": {
@@ -2354,14 +2354,14 @@
             "stars": 3,
             "comment": {
                 "en": "One of few Rogue action/damage boosts.",
-                "ru": "Одно из немногих усилений действий и урона Плута."
+                "ru": "Одно из немногих усилений бросков действия и урона для Плута."
             }
         },
         "veil-of-night": {
             "stars": 3,
             "comment": {
-                "en": "Advantage while hidden.",
-                "ru": "Даёт Преимущество, пока вы Скрыты."
+                "en": "Advantage on attacks through the veil.",
+                "ru": "Даёт Преимущество на атаки сквозь завесу."
             }
         },
         "stealth-expertise": {
@@ -2423,8 +2423,8 @@
         "spellcharge": {
             "stars": 2,
             "comment": {
-                "en": "Hard to build around effectively in Tier 4.",
-                "ru": "Под неё трудно собрать эффективную сборку на 4-м Ранге."
+                "en": "Hard to store enough tokens in Tier 4 to add a Hit Point of damage consistently.",
+                "ru": "На 4-м Ранге трудно накопить столько жетонов, чтобы стабильно наносить дополнительную Рану."
             }
         },
         "shadowhunter": {
@@ -2522,7 +2522,7 @@
             "stars": 2,
             "comment": {
                 "en": "Flexible pull, Stress, or area damage plus Restrained, but every option depends on a successful Spellcast Roll.",
-                "ru": "Гибко сочетает притягивание, Стресс или урон по области с состоянием «Обездвижен», но требует успешного Броска Заклинания."
+                "ru": "Позволяет выбрать притягивание, Стресс или урон по области и накладывает состояние «Обездвижен», но требует успешного Броска Заклинания."
             }
         },
         "wild-fortress": {
@@ -2557,7 +2557,7 @@
             "stars": 3,
             "comment": {
                 "en": "One of the stronger Touched Domain cards.",
-                "ru": "Одна из более сильных карт вида «Затронутый Доменом»."
+                "ru": "Одна из лучших карт типа «Затронутый»."
             }
         },
         "wild-surge": {
@@ -2585,7 +2585,7 @@
             "stars": 2,
             "comment": {
                 "en": "Most of the value is narrative and depends on generous GM rulings. Mechanical uses of the hostile terrain are likely to require extra rolls or create disadvantages.",
-                "ru": "Основная ценность повествовательная и зависит от щедрой трактовки Мастера. Механическое использование опасной местности, скорее всего, потребует дополнительных бросков или создаст помехи."
+                "ru": "Основная ценность повествовательная и зависит от щедрой трактовки Мастера. Механическое использование опасной местности, скорее всего, потребует дополнительных бросков или заставит бросать с Помехой."
             }
         },
         "fane-of-the-wilds": {
@@ -2599,21 +2599,21 @@
             "stars": 4,
             "comment": {
                 "en": "Far-range area damage without a Hope or Stress cost is excellent, and the additional effects are flexible enough for different encounters.",
-                "ru": "Урон по области на Дальней дистанции без затрат Надежды или Стресса очень силён, а дополнительные эффекты подходят для разных столкновений."
+                "ru": "Урон по области в пределах Далекой дистанции без затрат Надежды или Стресса очень силён, а дополнительные эффекты подходят для разных столкновений."
             }
         },
         "force-of-nature": {
             "stars": 2,
             "comment": {
                 "en": "The Hope cost for each action is too high.",
-                "ru": "Цена каждого Действия в Надежде слишком высока."
+                "ru": "Тратить Надежду перед каждым броском действия слишком дорого."
             }
         },
         "bolt-beacon": {
             "stars": 3,
             "comment": {
                 "en": "A good Far-range attack that applies Vulnerable.",
-                "ru": "Хорошая Далекая атака, накладывающая состояние «Уязвим»."
+                "ru": "Хорошая атака на Далекой дистанции, накладывающая состояние «Уязвим»."
             }
         },
         "mending-touch": {
@@ -2648,7 +2648,7 @@
             "stars": 3,
             "comment": {
                 "en": "Potent Stress + HP clearing.",
-                "ru": "Сильно снимает Стресс и очищает Раны."
+                "ru": "Эффективно очищает Стресс и Раны."
             }
         },
         "voice-of-reason": {
@@ -2703,8 +2703,8 @@
         "splendor-touched": {
             "stars": 2,
             "comment": {
-                "en": "The emergency resource swap is useful, but requires four Splendor cards and works only once per long rest.",
-                "ru": "Экстренная замена Ран на Стресс или Надежду полезна, но требует четырёх карт Домена Величия в Руке и работает раз в Продолжительный Отдых."
+                "en": "An effective resilience boost: +3 to your Severe threshold and a once-per-long-rest swap of Hit Points for Stress or Hope.",
+                "ru": "Эффективно повышает живучесть: +3 к порогу Тяжелого урона и замена Ран на Стресс или Надежду раз до следующего продолжительного отдыха."
             }
         },
         "healing-strike": {
@@ -2753,14 +2753,14 @@
             "stars": 2,
             "comment": {
                 "en": "Narrative end-of-campaign tool.",
-                "ru": "Инструмент повествовательного завершения кампании."
+                "ru": "Повествовательный инструмент для финала кампании."
             }
         },
         "blighting-strike": {
             "stars": 3,
             "comment": {
                 "en": "Decent Far-range attack.",
-                "ru": "Достойная Далекая атака."
+                "ru": "Достойная атака на Далекой дистанции."
             }
         },
         "voice-of-dread": {
@@ -2795,7 +2795,7 @@
             "stars": 3,
             "comment": {
                 "en": "Marks several Stress, pushes an adversary one range away, and can make them Vulnerable; a key card for an adversary-Stress build.",
-                "ru": "Отмечает противнику несколько Стресса, отталкивает на одну ступень дистанции и может сделать Уязвимым; ключевая карта для сборки через Стресс противников."
+                "ru": "Заставляет противника отметить несколько единиц Стресса, отталкивает на одну ступень дистанции и может сделать Уязвимым; ключевая карта для сборки через Стресс противников."
             }
         },
         "shared-trauma": {
@@ -2823,7 +2823,7 @@
             "stars": 3,
             "comment": {
                 "en": "Useful whole-party utility for passing through solid objects, with momentary immunity to physical damage; a similar Splendor option costs less Hope.",
-                "ru": "Полезная групповая магия для прохода сквозь твёрдые объекты и краткой невосприимчивости к физическому урону; похожий вариант домена Великолепия стоит меньше Надежды."
+                "ru": "Полезная групповая магия для прохода сквозь твёрдые объекты и краткой невосприимчивости к физическому урону; похожий вариант домена Величия стоит меньше Надежды."
             }
         },
         "dire-strike": {
@@ -2851,14 +2851,14 @@
             "stars": 2,
             "comment": {
                 "en": "Two Stress to deny 1 Fear is expensive, but the once-per-rest bonus can make an action roll nearly certain when the GM holds several Fear.",
-                "ru": "2 Стресса за отказ Мастеру в 1 Страхе — дорого, но раз за отдых бонус от накопленного Страха может сделать бросок действия почти гарантированно успешным."
+                "ru": "2 Стресса за то, чтобы Мастер не получил 1 Страх, — дорого, но раз за отдых бонус от накопленного Страха может сделать бросок действия почти гарантированно успешным."
             }
         },
         "wall-of-hunger": {
             "stars": 2,
             "comment": {
                 "en": "Can mark enormous amounts of adversary Stress and defeat many minions, but ends when you mark a Hit Point; stay safe or spend Hope to recast it.",
-                "ru": "Может отметить противникам очень много Стресса и побеждать многих миньонов, но исчезает, когда вы отмечаете Рану; держитесь в безопасности или тратьте Надежду на повторное применение."
+                "ru": "Может отметить противникам очень много Стресса и побеждать многих Приспешников, но исчезает, когда вы отмечаете Рану; держитесь в безопасности или тратьте Надежду на повторное применение."
             }
         },
         "dark-army": {
@@ -2900,7 +2900,7 @@
             "stars": 3,
             "comment": {
                 "en": "A capstone for builds that fill adversary Stress: it doubles damage against fully stressed targets and rewards defeating them.",
-                "ru": "Завершающая карта для сборок, которые заполняют Стресс противников: удваивает урон по целям с полностью отмеченным Стрессом и даёт Надежду за их победу."
+                "ru": "Завершающая карта для сборок, которые заполняют Стресс противников: удваивает урон по целям с полностью отмеченным Стрессом и даёт Надежду за победу над ними."
             }
         }
     };

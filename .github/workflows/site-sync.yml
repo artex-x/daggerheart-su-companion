@@ -1,0 +1,34 @@
+name: Verify ratings against the live site and guide
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Compare ratings with daggerheart.su and the guide
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify ratings
+        run: node scripts/audit/ratings-audit.mjs verify
+
+      - name: Upload the audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ratings-audit-report
+          path: .audit/report.md
+          if-no-files-found: ignore

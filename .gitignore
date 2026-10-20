@@ -2,6 +2,7 @@
 /dist/
 /tmp/
 /artifacts/
+/.audit/
 *.log
 *.tmp
 *.bak

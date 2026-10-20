@@ -2,6 +2,18 @@
 
 All notable changes to this project are documented here.
 
+## 7.0.17 - 2026-10-21
+
+- Closed a pinned rating popover on an outside click and kept it attached to its card while the page scrolls.
+- Underlined print usage limits in the language of each card, so mixed Russian and English print queues are marked correctly.
+- Retried class details and rule tooltips after a failed request instead of caching the failure until reload.
+- Kept the script running when the browser blocks session storage.
+- Reloaded the page only when entering or leaving the print studio, not on every anchor change.
+- Stopped the script's own popovers, tooltips and class text from triggering repeated full page passes.
+- Read the print queue once per pass instead of once per card.
+- Removed rating popovers of cards that the site removed, and replaced the per-rebuild filter click listener with one shared listener.
+- Sanitized stored card markup before the studio and print pages insert it.
+
 ## 7.0.16 - 2026-10-20
 
 - Restored the rating for Swift Step, which the guide rates under its errata name Serenity. The site still uses the `swift-step` slug.

@@ -2,7 +2,7 @@
 // @name         Daggerheart Companion: ratings, class cards & print
 // @name:ru      Помощник Daggerheart.su: рейтинги, классы и печать
 // @namespace    https://daggerheart.su/
-// @version      7.0.16
+// @version      7.0.17
 // @description  Ratings, improved class cards, filters, and local A4 print preparation for Daggerheart.su.
 // @description:ru Рейтинги, улучшенные карточки классов, фильтры и локальная подготовка листов A4 для Daggerheart.su.
 // @author       artex-x
@@ -3432,22 +3432,39 @@
         });
     }
 
+    // Removes executable content: scripts, frames, inline handlers and javascript: URLs.
+    function stripActiveContent(root) {
+        root.querySelectorAll("script, iframe, object, embed").forEach(node => node.remove());
+        root.querySelectorAll("*").forEach(node => {
+            [...node.attributes].forEach(attribute => {
+                const unsafeUrl = /^(?:href|src|action|formaction|xlink:href)$/i.test(attribute.name)
+                    && /^\s*javascript:/i.test(attribute.value);
+                if (/^on/i.test(attribute.name) || unsafeUrl) node.removeAttribute(attribute.name);
+            });
+        });
+    }
+
+    // Returns stored card markup as an inert, sanitized fragment. The queue can come from
+    // page-origin localStorage, which site scripts can write, so it is never trusted.
+    function storedCardFragment(html) {
+        const template = document.createElement("template");
+        template.innerHTML = String(html || "");
+        stripActiveContent(template.content);
+        return template.content;
+    }
+
     function serializeCard(card) {
         const clone = card.cloneNode(true);
         clone.classList.remove("dh-rating-hidden");
         clone.classList.add("dh-queued-card");
         clone.style.removeProperty("display");
         clone.querySelectorAll(
-            ".dh-card-tools, .dh-pick-button, .dh-rating, .dh-rating-popover, .dh-class-loading, script, iframe"
+            ".dh-card-tools, .dh-pick-button, .dh-rating, .dh-rating-popover, .dh-class-loading"
         ).forEach(node => node.remove());
         clone.querySelectorAll("a.button").forEach(node => node.remove());
         clone.querySelectorAll("[id]").forEach(node => node.removeAttribute("id"));
         clone.removeAttribute("id");
-        clone.querySelectorAll("*").forEach(node => {
-            [...node.attributes].forEach(attribute => {
-                if (/^on/i.test(attribute.name)) node.removeAttribute(attribute.name);
-            });
-        });
+        stripActiveContent(clone);
         absolutizeCardAssets(clone);
         clone.querySelectorAll("img").forEach(image => {
             image.removeAttribute("loading");
@@ -3597,6 +3614,17 @@
 
     let activeRatingPopover = null;
     let ratingPopoverTimer = null;
+    // Popover portal -> owning card, so portals of cards that the site removed can be dropped.
+    const ratingPopoverOwners = new Map();
+
+    function pruneRatingPopovers() {
+        ratingPopoverOwners.forEach((card, popover) => {
+            if (card.isConnected) return;
+            if (activeRatingPopover?.popover === popover) closeRatingPopover();
+            popover.remove();
+            ratingPopoverOwners.delete(popover);
+        });
+    }
 
     function positionRatingPopover(popover, button) {
         const anchor = button.getBoundingClientRect();
@@ -3668,6 +3696,7 @@
 
         const popover = createRatingPopover(meta);
         document.body.appendChild(popover);
+        ratingPopoverOwners.set(popover, card);
         const scheduleClose = () => {
             clearTimeout(ratingPopoverTimer);
             if (popover.dataset.pinned === "true") return;
@@ -3703,7 +3732,24 @@
         (root || document).querySelectorAll(".card").forEach(injectRating);
     }
 
-    let currentMinRating = Number(sessionStorage.getItem(FILTER_KEY) || 0);
+    // Blocked site data makes sessionStorage throw; the filter then works without persistence.
+    function sessionGet(key) {
+        try {
+            return sessionStorage.getItem(key);
+        } catch {
+            return null;
+        }
+    }
+
+    function sessionSet(key, value) {
+        try {
+            sessionStorage.setItem(key, value);
+        } catch {
+            // The filter value stays in memory for this page only.
+        }
+    }
+
+    let currentMinRating = Number(sessionGet(FILTER_KEY) || 0);
 
     function applyRatingFilter() {
         // Сохранённый порог действует только там, где скрипт действительно
@@ -3792,7 +3838,7 @@
                 event.stopPropagation();
                 event.stopImmediatePropagation();
                 currentMinRating = value;
-                sessionStorage.setItem(FILTER_KEY, String(value));
+                sessionSet(FILTER_KEY, String(value));
                 menu.querySelectorAll(".dropdown-button").forEach(node => node.classList.remove("active"));
                 button.classList.add("active");
                 input.value = value ? tr("minRating", { n: value }) : tr("allRatings");
@@ -3818,9 +3864,6 @@
             const open = !menu.classList.contains("show");
             document.querySelectorAll(".dropdown-menu.show").forEach(node => node.classList.remove("show"));
             menu.classList.toggle("show", open);
-        });
-        document.addEventListener("click", event => {
-            if (!inner.contains(event.target)) menu.classList.remove("show");
         });
     }
 
@@ -3862,7 +3905,12 @@
                 if (!response.ok) throw new Error("Class request failed");
                 return response.text();
             })
-            .then(html => parseClassDetails(new DOMParser().parseFromString(html, "text/html")));
+            .then(html => parseClassDetails(new DOMParser().parseFromString(html, "text/html")))
+            .catch(error => {
+                // A transient failure must not stay cached for the rest of the page lifetime.
+                classDetailCache.delete(cacheKey);
+                throw error;
+            });
         classDetailCache.set(cacheKey, request);
         return request;
     }
@@ -3891,6 +3939,10 @@
                     title: (doc.title || link.textContent || "").split("|")[0].trim(),
                     body: compactRuleSummary(firstParagraph?.textContent || "")
                 };
+            })
+            .catch(error => {
+                classRuleTooltipCache.delete(href);
+                throw error;
             });
         classRuleTooltipCache.set(href, request);
         return request;
@@ -4198,11 +4250,11 @@
         button.title = label;
     }
 
-    function injectPickButton(card) {
+    function injectPickButton(card, ids) {
         if (!isPrintableCard(card)) return;
         if (card.querySelector(":scope > .dh-card-tools > .dh-pick-button")) return;
         const button = makeIconButton("+", "", "dh-pick-button");
-        setPickButtonState(card, button, new Set(loadQueue().map(item => item.id)));
+        setPickButtonState(card, button, ids);
         button.addEventListener("click", event => {
             event.preventDefault();
             event.stopPropagation();
@@ -4226,7 +4278,9 @@
     }
 
     function injectPickButtons(root) {
-        (root || document).querySelectorAll(".card").forEach(injectPickButton);
+        // Read the stored queue once per pass, not once per card.
+        const ids = new Set(loadQueue().map(item => item.id));
+        (root || document).querySelectorAll(".card").forEach(card => injectPickButton(card, ids));
     }
 
     function refreshPickButtons(queue) {
@@ -4545,8 +4599,8 @@
         preview.className = "dh-studio-preview";
         const nativeWrap = document.createElement("div");
         nativeWrap.className = "dh-studio-native-wrap card_holder normal";
-        nativeWrap.innerHTML = item.html;
-        nativeWrap.querySelectorAll(".dh-card-tools, .dh-pick-button, .dh-rating, .dh-rating-popover, script, iframe").forEach(node => node.remove());
+        nativeWrap.appendChild(storedCardFragment(item.html));
+        nativeWrap.querySelectorAll(".dh-card-tools, .dh-pick-button, .dh-rating, .dh-rating-popover").forEach(node => node.remove());
         // Stored cards contain markup only. Restore the hover/focus behavior
         // for every internal rules reference after rebuilding the preview.
         nativeWrap.querySelectorAll('a[href*="/rule/"]').forEach(link => {
@@ -4655,8 +4709,9 @@
                 cell.className = "dh-print-cell";
                 const nativeWrap = document.createElement("div");
                 nativeWrap.className = "dh-print-native-wrap card_holder normal";
-                nativeWrap.innerHTML = item.html;
-                markPrintUsageLimits(nativeWrap, isRu ? "ru" : "en");
+                nativeWrap.appendChild(storedCardFragment(item.html));
+                // The queue is shared by ru. and en. pages, so each card keeps its own language.
+                markPrintUsageLimits(nativeWrap, item.language || (isRu ? "ru" : "en"));
                 normalizePrintedClassCard(nativeWrap);
                 nativeWrap.querySelectorAll("img").forEach(image => {
                     image.removeAttribute("loading");
@@ -4981,6 +5036,7 @@
             renderPrintStudio();
             return;
         }
+        pruneRatingPopovers();
         enhanceClassCards();
         injectRatings();
         createRatingFilter();
@@ -5004,13 +5060,18 @@
     setTimeout(initializePage, 500);
     setTimeout(initializePage, 1600);
 
+    // Nodes that this script creates. Their insertion must not schedule another full pass.
+    const OWN_NODES = "#dh-selection-dock, #dh-toast, .dh-card-tools, .dh-rating, .dh-pick-button, " +
+        ".dh-rating-popover, .dh-class-rule-tooltip, .dh-class-quick, #dh-rating-filter-container, " +
+        ".dh-mix-dialog, .dh-print-usage-limit";
+
     const observer = new MutationObserver(mutations => {
         if (location.hash === PRINT_HASH) return;
         const relevant = mutations.some(mutation =>
             [...mutation.addedNodes].some(node =>
                 node.nodeType === 1 &&
-                !node.matches?.("#dh-selection-dock, #dh-toast, .dh-card-tools, .dh-rating, .dh-pick-button") &&
-                !node.closest?.("#dh-selection-dock, #dh-toast, .dh-rating")
+                !node.matches?.(OWN_NODES) &&
+                !node.closest?.(OWN_NODES)
             )
         );
         if (relevant) scheduleInitialize();
@@ -5018,21 +5079,32 @@
     observer.observe(document.body, { childList: true, subtree: true });
 
     document.addEventListener("click", event => {
-        if (!event.target.closest(".dh-rating")) {
-            document.querySelectorAll(".dh-rating.open").forEach(node => {
-                node.classList.remove("open");
-                node.querySelector(".dh-rating-pill")?.setAttribute("aria-expanded", "false");
-            });
+        if (!event.target.closest(".dh-rating, .dh-rating-popover")) closeRatingPopover();
+        if (!event.target.closest("#dh-rating-filter")) {
+            document.querySelector("#dh-rating-filter .dropdown-menu.show")?.classList.remove("show");
         }
         if (event.target.closest(".filter") && !event.target.closest("#dh-rating-filter-container")) {
             setTimeout(applyRatingFilter, 120);
         }
     });
 
+    // The popover is a fixed-position portal, so it must follow its pill when the page scrolls.
+    const repositionActiveRatingPopover = () => {
+        if (activeRatingPopover) positionRatingPopover(activeRatingPopover.popover, activeRatingPopover.button);
+    };
+    window.addEventListener("scroll", repositionActiveRatingPopover, { capture: true, passive: true });
+    window.addEventListener("resize", repositionActiveRatingPopover, { passive: true });
+
     window.addEventListener("storage", event => {
         if (event.key === QUEUE_KEY) refreshQueueUi();
     });
-    window.addEventListener("hashchange", () => location.reload());
+    // Only entering or leaving the print studio needs a fresh page; other anchors are ordinary navigation.
+    let printStudioOpen = location.hash === PRINT_HASH;
+    window.addEventListener("hashchange", () => {
+        const opening = location.hash === PRINT_HASH;
+        if (opening !== printStudioOpen) location.reload();
+        printStudioOpen = opening;
+    });
 
     try {
         if (typeof GM_addValueChangeListener === "function") {
